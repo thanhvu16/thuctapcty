@@ -43,15 +43,10 @@ const TRANG_THAI_HOAT_DONG = 1;
 
 //Role
 CONST QUAN_TRI_HT = 'quản trị hệ thống';
-CONST TRUONG_PHONG_PHONG_VIEN = 'Trưởng phòng phóng viên';
-CONST PHO_PHONG_PHONG_VIEN= 'Phó phòng phóng viên';
-CONST CONG_TAC_VIEN= 'Cộng tác viên';
-CONST PHONG_VIEN= 'phóng viên';
-CONST BAN_BIEN_TAP = 'Ban biên tập';
-CONST THU_KY_TOA_SOAN = 'Thư ký toàn soạn';
-CONST LANH_DAO_TOA_SOAN = 'Lãnh đạo tòa soạn';
-CONST THIET_KE = 'Thiết kế';
-CONST XUONG_IN = 'Xưởng in';
+CONST NHA_TRUONG = 'Nhà trường';
+CONST SINH_VIEN= 'Sinh viên';
+CONST DOANH_NGHIEP= 'Doanh nghiệp';
+
 
 
 

@@ -59,27 +59,13 @@ class AdminController extends Controller
         if ($user->hasRole(QUAN_TRI_HT)) {
             return redirect()->route('nguoi-dung.index');
         }
-        if ($user->hasRole(PHONG_VIEN)) {
-            return redirect()->route('phong-vien.create');
+        if ($user->hasRole(NHA_TRUONG)) {
+            return redirect()->route('nhaTruong');
         }
-        if ($user->hasRole(CONG_TAC_VIEN)) {
-            return redirect()->route('phong-vien.create');
+        if ($user->hasRole(DOANH_NGHIEP)) {
+            return redirect()->route('quanly');
         }
-        if ($user->hasRole(TRUONG_PHONG_PHONG_VIEN)) {
-            return redirect()->route('baivietcaptruong');
-        }
-        if ($user->hasRole(PHO_PHONG_PHONG_VIEN)) {
-            return redirect()->route('baivietcappho');
-        }
-        if ($user->hasRole(THU_KY_TOA_SOAN)) {
-            return redirect()->route('thu-ky.index');
-        }
-        if ($user->hasRole(BAN_BIEN_TAP)) {
-            return redirect()->route('bien-tap.index');
-        }
-        if ($user->hasRole(LANH_DAO_TOA_SOAN)) {
-            return redirect()->route('lanh-dao.index');
-        }
+
         switch (auth::user()->roles->pluck('name')[0]) {
             case BAN_BIEN_TAP:
                 $status = 2;

@@ -17,6 +17,16 @@
             @role(QUAN_TRI_HT)
             @include('admin::layouts.components.sidebar_admin')
             @endrole
+            @role(NHA_TRUONG)
+            @include('admin::layouts.components.sidebar_nhaTruong')
+            @endrole
+            @role(SINH_VIEN)
+            @include('admin::layouts.components.sidebar_sinhvien')
+            @endrole
+
+            @role(DOANH_NGHIEP)
+            @include('admin::layouts.components.sidebar_doanhNghiep')
+            @endrole
 
         </ul>
     </section>

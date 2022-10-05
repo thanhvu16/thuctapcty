@@ -14,3 +14,10 @@
         <li class="{{ Route::is('vai-tro.index') ? 'active' : '' }}"><a href="{{ route('vai-tro.index') }}"><i class="fa fa-circle-o"></i>Quyền hạn</a></li>
     </ul>
 </li>
+<li class="{{  Route::is('doanh-nghiep.index') ? 'active' : '' }} ">
+    <a href="{{route('doanh-nghiep.index')}}">
+        <i class="fa fa-user-plus" ></i> <span>Doanh nghiệp</span>
+        <span class="pull-right-container">
+            </span>
+    </a>
+</li>

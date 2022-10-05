@@ -78,7 +78,8 @@ class NguoiDungController extends Controller
         canPermission(AllPermission::themNguoiDung());
 
         $roles = Role::all();
-        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
+//        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
+        $danhSachDonVi = null;
 
         return view('admin::nguoi-dung.create',
             compact('roles','danhSachDonVi'));
@@ -243,10 +244,10 @@ class NguoiDungController extends Controller
 
         $permissionUser = $user->permissions;
         $arrPermissionId = $permissionUser->pluck('id')->toArray();
-        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
+//        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
 
 
-        return view('admin::nguoi-dung.edit', compact('user', 'donViId','danhSachDonVi',
+        return view('admin::nguoi-dung.edit', compact('user', 'donViId',
             'roles',  'danhSachPhongBan', 'donVi', 'arrPermissionId'));
     }
 
