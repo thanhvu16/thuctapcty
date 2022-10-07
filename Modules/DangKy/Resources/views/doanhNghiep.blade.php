@@ -19,10 +19,10 @@
 
                             </div>
                             <div class="col-md-1">
-                                <form action="" method="post" id="dangky">
+                                <form action="{{route('duyetSVDoanhNghiep')}}" method="post" id="dangky">
                                     @csrf
 
-                                    <button type="button"
+                                    <button type="submit"
                                             class="btn btn-sm mt-1 btn-submit btn-primary waves-effect waves-light pull-right btn-duyet-all pull-right btn-sm mb-2"
                                             data-original-title=""
                                             title=""><i class="fa fa-check"></i> Duyệt và cấp tài khoản
@@ -76,7 +76,7 @@
                                 <th width="10%" class="text-center">Địa chỉ liên hệ</th>
                                 <th width="10%" class="text-center">Số điện thoại</th>
                                 <th width="15%" class="text-center">Ý kiến </th>
-                                <th width="10%" class="text-center">Tác vụ</th>
+{{--                                <th width="10%" class="text-center">Tác vụ</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -93,19 +93,19 @@
                                     <td class="text-left" style="vertical-align: middle">{{$data->dia_chi}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{$data->so_dien_thoai}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->y_kien}}</td>
-                                    <td class="text-center">
-                                            @csrf
-                                            <a class="btn-action btn  btn-icon btn-light btn-sm" style="color: green !important;"
-                                               href="" role="button" title="Sửa">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-                                            <a class="btn-action btn btn-color-blue btn-icon btn-light btn-sm" style="color: red !important;"
-                                               href="" role="button" title="Sửa">
-                                                <i class="fa fa-close"></i>
-                                            </a>
+{{--                                    <td class="text-center">--}}
+{{--                                            @csrf--}}
+{{--                                            <a class="btn-action btn  btn-icon btn-light btn-sm" style="color: green !important;"--}}
+{{--                                               href="" role="button" title="Sửa">--}}
+{{--                                                <i class="fa fa-check"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <a class="btn-action btn btn-color-blue btn-icon btn-light btn-sm" style="color: red !important;"--}}
+{{--                                               href="" role="button" title="Sửa">--}}
+{{--                                                <i class="fa fa-close"></i>--}}
+{{--                                            </a>--}}
 
 
-                                    </td>
+{{--                                    </td>--}}
 
                                 </tr>
                             @empty

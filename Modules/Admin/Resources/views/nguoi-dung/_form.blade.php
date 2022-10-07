@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                @if (auth::user()->hasRole(QUAN_TRI_HT))
+{{--                @if (auth::user()->hasRole(QUAN_TRI_HT))--}}
                     <div class="form-group col-md-4">
                         <label class="col-form-label" for="quyen-han">Quyền hạn <span
                                 style="color: red">*</span></label>
@@ -71,7 +71,18 @@
                             @endif
                         </select>
                     </div>
-                @endif
+
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="quyen-han">Doanh nghiệp </label>
+                        <select class="form-control select2" name="doanh_nghiep" >
+                            <option value="">--Chọn doanh nghiệp -</option>
+                            @foreach($doanhNghiep as $dsDV)
+                                <option value="{{$dsDV->id}}" {{ isset($user) && $user->doanh_nghiep == $dsDV->id ? 'selected' : '' }}>{{$dsDV->ten_doanh_nghiep}}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+{{--                @endif--}}
 
                 <div class="form-group col-md-4">
                     <label class="col-form-label" for="email">Email @include('admin::required')</label>

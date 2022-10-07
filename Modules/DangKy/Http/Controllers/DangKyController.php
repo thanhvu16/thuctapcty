@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\DangKy;
 use Modules\Admin\Entities\DoanhNghiep;
-use DB;
+use auth,DB;
 
 class DangKyController extends Controller
 {
@@ -53,7 +53,8 @@ class DangKyController extends Controller
         $ten = $request->get('ten_sinh_vien');
         $ma = $request->get('ma_sinh_vien');
         $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
-        $danh_sach = DangKy::where('trang_thai',DangKy::CAN_BO_TRUONG_DUYET)
+        $danh_sach = DangKy::where('doanh_nghiep',auth::user()->doanh_nghiep)
+        ->where('trang_thai',DangKy::CAN_BO_TRUONG_DUYET)
             ->where(function ($query) use ($ten) {
                 if (!empty($ten)) {
                     return $query->where(DB::raw('lower(ten_sinh_vien)'), 'LIKE', "%" . mb_strtolower($ten) . "%");

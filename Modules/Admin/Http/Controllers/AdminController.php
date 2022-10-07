@@ -65,6 +65,11 @@ class AdminController extends Controller
         if ($user->hasRole(DOANH_NGHIEP)) {
             return redirect()->route('quanly');
         }
+        if ($user->hasRole(SINH_VIEN)) {
+            return redirect()->route('quanly');
+        }
+        dd(auth::user());
+
 
         switch (auth::user()->roles->pluck('name')[0]) {
             case BAN_BIEN_TAP:

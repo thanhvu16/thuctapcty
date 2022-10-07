@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-md-8"></div>
                             <div class="col-md-3">
-                                <select class="form-control select2" name="doanh_nghiep" >
+                                <select class="form-control select2" name="doanh_nghiep" form="dangky" required>
                                     <option value="">--Chọn doanh nghiệp gửi sinh viên-</option>
                                     @foreach($doanhNghiep as $dsDV)
                                         <option value="{{$dsDV->id}}" >{{$dsDV->ten_doanh_nghiep}}</option>
@@ -25,10 +25,10 @@
                                 </select>
                             </div>
                             <div class="col-md-1">
-                                <form action="{{ route('dang-ky.store') }}" method="post" id="dangky">
+                                <form action="{{ route('duyetSVNhaTruong') }}" method="post" id="dangky">
                                     @csrf
 
-                                    <button type="button"
+                                    <button type="submit"
                                             class="btn btn-sm mt-1 btn-submit btn-primary waves-effect waves-light pull-right btn-duyet-all pull-right btn-sm mb-2"
                                             data-original-title=""
                                             title=""><i class="fa fa-check"></i> Duyệt
@@ -100,22 +100,20 @@
                                     <td class="text-center" style="vertical-align: middle">{{$data->so_dien_thoai}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->y_kien}}</td>
                                     <td class="text-center">
+                                        <form method="POST" action="{{route('xoaSV',$data->id)}}">
                                             @csrf
-                                            <a class="btn-action btn  btn-icon btn-light btn-sm" style="color: green !important;"
-                                               href="" role="button" title="Sửa">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-                                            <a class="btn-action btn btn-color-blue btn-icon btn-light btn-sm" style="color: red !important;"
-                                               href="" role="button" title="Sửa">
-                                                <i class="fa fa-close"></i>
-                                            </a>
+                                            <button class="btn btn-action btn-color-red btn-icon btn-ligh btn-sm btn-remove-item" role="button"
+                                                    title="Xóa sinh viên">
+                                                <i class="fa fa-close" style="color: red"></i>
+                                            </button>
+                                        </form>
 
 
                                     </td>
 
                                 </tr>
                             @empty
-                                <td class="text-center" colspan="9" style="vertical-align: middle">Không có dữ liệu !
+                                <td class="text-center" colspan="10" style="vertical-align: middle">Không có dữ liệu !
                                 </td>
                             @endforelse
 

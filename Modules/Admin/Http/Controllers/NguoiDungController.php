@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Hash, DB, Auth, Session;
+use Modules\Admin\Entities\DoanhNghiep;
 use Modules\Admin\Entities\HeSoTheLoai;
 use Modules\Admin\Entities\NguonTin;
 use Modules\Admin\Entities\DonVi;
@@ -80,9 +81,10 @@ class NguoiDungController extends Controller
         $roles = Role::all();
 //        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
         $danhSachDonVi = null;
+        $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
 
         return view('admin::nguoi-dung.create',
-            compact('roles','danhSachDonVi'));
+            compact('roles','danhSachDonVi','doanhNghiep'));
     }
 
     /**
@@ -119,6 +121,7 @@ class NguoiDungController extends Controller
         $user->role_id =  $request->role_id;
         $user->username =  $request->username;
         $user->fullname =  $request->fullname;
+        $user->doanh_nghiep =  $request->doanh_nghiep;
         $user->email =  $request->email;
         if (!empty($data['anh_dai_dien'])) {
             $inputFile = $data['anh_dai_dien'];
@@ -231,6 +234,7 @@ class NguoiDungController extends Controller
         $user = User::findOrFail($id);
         $donVi = $user->donVi;
         $donViId = isset($donVi) && $donVi->parent_id != 0 ? $donVi->parent_id : $donVi->id ?? null;
+        $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
 
         $roles = Role::all();
 
@@ -248,7 +252,7 @@ class NguoiDungController extends Controller
 
 
         return view('admin::nguoi-dung.edit', compact('user', 'donViId',
-            'roles',  'danhSachPhongBan', 'donVi', 'arrPermissionId'));
+            'roles',  'danhSachPhongBan', 'donVi', 'arrPermissionId','doanhNghiep'));
     }
 
     /**
@@ -265,13 +269,13 @@ class NguoiDungController extends Controller
 
 
 
-
         $user = User::findOrFail($id);
         $user->birthday =  !empty($request->ngay_ban_hanh) ? formatYMD($request->ngay_ban_hanh) : null;
         $user->role_id =  $request->role_id;
         $user->username =  $request->username;
         $user->fullname =  $request->fullname;
         $user->email =  $request->email;
+        $user->doanh_nghiep =  $request->doanh_nghiep;
 
         $data = $request->all();
 
