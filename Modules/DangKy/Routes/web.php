@@ -22,3 +22,6 @@ Route::post('xoa-sinh-vien/delete/{id}', array('as' => 'xoaSV', 'uses' => 'Doanh
 Route::post('duyet-sinh-vien', array('as' => 'duyetSVNhaTruong', 'uses' => 'DoanhNghiepController@duyetSVNhaTruong'));
 Route::post('duyet-sinh-vien-doanh-nghiep', array('as' => 'duyetSVDoanhNghiep', 'uses' => 'DoanhNghiepController@duyetSVDoanhNghiep'));
 Route::get('quan-ly-sinh-vien', 'DangKyController@sinhVien')->name('quanly');
+
+//công việc
+Route::resource('cong-viec', 'GiaoViecController');

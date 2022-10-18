@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\DangKy;
 use Modules\Admin\Entities\DoanhNghiep;
 use DB,Hash;
+use Spatie\Permission\Models\Role;
 
 class DoanhNghiepController extends Controller
 {
@@ -122,6 +123,13 @@ class DoanhNghiepController extends Controller
                 $user->dang_ky = $Sv->id;
                 $user->status = 1;
                 $user->save();
+
+                $role = Role::findById(13);
+                $user->assignRole($role->name);
+                $permissions = $role->permissions->pluck('name')->toArray();
+                $user->syncPermissions($permissions);
+
+
             }
             return redirect()->back()->with('success', 'Gửi doanh nghiệp thành công !');
         } else {
