@@ -131,7 +131,7 @@ class DoanhNghiepController extends Controller
 
 
             }
-            return redirect()->back()->with('success', 'Gửi doanh nghiệp thành công !');
+            return redirect()->back()->with('success', 'Duyệt thành công !');
         } else {
             return redirect()->back()->with('error', 'Bạn chưa chọn sinh viên nào !');
         }

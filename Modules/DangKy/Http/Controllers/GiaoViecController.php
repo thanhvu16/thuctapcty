@@ -2,12 +2,13 @@
 
 namespace Modules\DangKy\Http\Controllers;
 
+use App\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use DB,Hash;
+use DB, Hash;
 use Modules\Admin\Entities\CongViec;
-use auth;
+use auth,File;
 
 class GiaoViecController extends Controller
 {
@@ -19,15 +20,15 @@ class GiaoViecController extends Controller
     {
         $ten = $request->get('noi_dung');
         $CongViec = CongViec::whereNull('deleted_at')
-            ->where('sinh_vien_id',auth::user()->id)
-            ->where('trang_thai',1)
+            ->where('sinh_vien_id', auth::user()->id)
+            ->where('trang_thai', 1)
             ->where(function ($query) use ($ten) {
                 if (!empty($ten)) {
                     return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
                 }
             })
             ->paginate(PER_PAGE);
-        return view('dangky::cong-viec.index',compact('CongViec'));
+        return view('dangky::cong-viec.index', compact('CongViec'));
     }
 
     /**
@@ -36,7 +37,8 @@ class GiaoViecController extends Controller
      */
     public function create()
     {
-        return view('dangky::create');
+        $sinhVien = User::role([SINH_VIEN])->get();
+        return view('dangky::cong-viec.create', compact('sinhVien'));
     }
 
     /**
@@ -46,7 +48,27 @@ class GiaoViecController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cv = new CongViec();
+        $cv->sinh_vien_id = $request->sinh_vien_id;
+        $cv->nguoi_giao = auth::user()->id;
+        $cv->han_xu_ly = !empty($request->han_xu_ly) ? formatYMD($request->han_xu_ly) : date('Y-m-d');
+        $cv->noi_dung = $request->noi_dung;
+        $cv->trang_thai = 1;
+        $cv->save();
+        if($request->file)
+        {
+            $uploadPath = UPLOAD_FILE_CONG_VIEC;
+            if (!File::exists($uploadPath)) {
+                File::makeDirectory($uploadPath, 0777, true, true);
+            }
+            $fileName = date('Y_m_d') . '_' . Time() . '_' . $request->file->getClientOriginalName();
+            $urlFile = UPLOAD_FILE_CONG_VIEC . '/' . $fileName;
+            $request->file->move($uploadPath, $fileName);
+            $cv->file = $urlFile;
+            $cv->save();
+        }
+        return redirect()->back()->with('success', 'Thêm công việc thành công !');
+
     }
 
     /**
