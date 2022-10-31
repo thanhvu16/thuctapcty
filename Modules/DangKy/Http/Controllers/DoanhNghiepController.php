@@ -51,7 +51,7 @@ class DoanhNghiepController extends Controller
         $data->dia_chi = $request->dia_chi;
         $data->so_dien_thoai = $request->so_dien_thoai;
         $data->save();
-
+        return redirect()->back()->with('success', 'Thêm mới doanh nghiệp thành công !');
 
     }
 
