@@ -84,6 +84,7 @@ class DangKyController extends Controller
             $dangKY->ngay_sinh = !empty($request->ngay_sinh) ? formatYMD($request->ngay_sinh) : null;
             $dangKY->lop = $request->lop;
             $dangKY->khoa = $request->khoa;
+            $dangKY->email = $request->email;
             $dangKY->dia_chi = $request->dia_chi;
             $dangKY->so_dien_thoai = $request->so_dien_thoai;
             $dangKY->y_kien = $request->y_kien;

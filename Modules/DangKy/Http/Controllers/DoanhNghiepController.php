@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\DangKy;
 use Modules\Admin\Entities\DoanhNghiep;
-use DB,Hash;
+use DB,Hash,Mail;
 use Spatie\Permission\Models\Role;
 
 class DoanhNghiepController extends Controller
@@ -104,6 +104,7 @@ class DoanhNghiepController extends Controller
 
     public function duyetSVDoanhNghiep(Request $request)
     {
+        $mang = [];
         $data = $request->all();
         $danhSach = $data['duyet'] ?? null;
         if (!empty($danhSach)) {
@@ -120,15 +121,23 @@ class DoanhNghiepController extends Controller
                 $user->role_id = 13;
                 $user->doanh_nghiep = $Sv->doanh_nghiep;
                 $user->birthday = $Sv->ngay_sinh;
+                $user->email = $Sv->email;
                 $user->dang_ky = $Sv->id;
                 $user->status = 1;
                 $user->save();
-
+                array_push($mang,$Sv);
                 $role = Role::findById(13);
                 $user->assignRole($role->name);
                 $permissions = $role->permissions->pluck('name')->toArray();
                 $user->syncPermissions($permissions);
 
+                $email = $Sv->email;
+                $data1['info'] = $mang;
+                Mail::Send('guiMail.guiMail', $data1, function ($message) use ($email) {
+                    $message->from('haithanhcx1@gmail.com', 'ThucTap');
+                    $message->to($email, $email);
+                    $message->subject('Thông tin tài khoản sinh viên');
+                });
 
             }
             return redirect()->back()->with('success', 'Duyệt thành công !');

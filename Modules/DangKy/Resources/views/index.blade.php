@@ -188,6 +188,15 @@
                                 </div>
                                 <div class="row form-group mt-2">
                                     <div class="col-lg-4 col-md-4 col-xs-4 col-maggin-bot">
+                                        <label class="form-label">Email <span style="color: red">(*)</span> :</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-xs-8 col-maggin-bot">
+                                        <input name="email" type="text" id="email" placeholder="Email nhận thông tin kết quả từ doanh nghiệp" class="form-control" required>
+                                    </div>
+
+                                </div>
+                                <div class="row form-group mt-2">
+                                    <div class="col-lg-4 col-md-4 col-xs-4 col-maggin-bot">
                                         <label class="form-label">Địa chỉ liên hệ <span style="color: red">(*)</span> :</label>
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-xs-8 col-maggin-bot">
