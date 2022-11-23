@@ -25,3 +25,5 @@ Route::get('quan-ly-sinh-vien', 'DangKyController@sinhVien')->name('quanly');
 
 //công việc
 Route::resource('cong-viec', 'GiaoViecController');
+Route::get('danh-sach-cong-viec-da-giao', 'GiaoViecController@congViecDaGiao')->name('congViecDaGiao');
+Route::get('danh-sach-cong-viec-hoan-thanh', 'GiaoViecController@congViecDaHoanThanh')->name('congViecDaHoanThanh');

@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use DB, Hash;
 use Modules\Admin\Entities\CongViec;
 use auth,File;
+use Modules\Admin\Entities\CongViecChiTiet;
 
 class GiaoViecController extends Controller
 {
@@ -29,6 +30,33 @@ class GiaoViecController extends Controller
             })
             ->paginate(PER_PAGE);
         return view('dangky::cong-viec.index', compact('CongViec'));
+    }
+    public function congViecDaGiao(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $CongViec = CongViec::whereNull('deleted_at')
+            ->where('nguoi_giao', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->paginate(PER_PAGE);
+        return view('dangky::cong-viec.CongViecDaGiao', compact('CongViec'));
+    }
+
+    public function congViecDaHoanThanh(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $CongViec = CongViec::whereNull('deleted_at')
+            ->where('nguoi_giao', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })->where('trang_thai', 3)
+            ->paginate(PER_PAGE);
+        return view('dangky::cong-viec.CongViecHT', compact('CongViec'));
     }
 
     /**
@@ -66,6 +94,25 @@ class GiaoViecController extends Controller
             $request->file->move($uploadPath, $fileName);
             $cv->file = $urlFile;
             $cv->save();
+        }
+        $noiDungCt = $request->noi_dung_ct;
+        $hanXuLy = $request->han_xu_ly_ct;
+        if ($noiDungCt && count($noiDungCt) > 0) {
+            foreach ($noiDungCt as $key => $item2) {
+                if ($item2) {
+                    $noiDUng = new CongViecChiTiet();
+                    $noiDUng->cong_viec_id = $cv->id;
+                    $noiDUng->noi_dung = $item2;
+                    $noiDUng->han_xu_ly = !empty($hanXuLy[$key]) ? formatYMD($hanXuLy[$key]) : date('Y-m-d');
+                    $noiDUng->save();
+                }
+            }
+        }else{
+            $noiDUng = new CongViecChiTiet();
+            $noiDUng->cong_viec_id = $cv->id;
+            $noiDUng->noi_dung = $request->noi_dung;
+            $noiDUng->han_xu_ly = !empty($request->han_xu_ly) ? formatYMD($request->han_xu_ly) : date('Y-m-d');
+            $noiDUng->save();
         }
         return redirect()->back()->with('success', 'Thêm công việc thành công !');
 

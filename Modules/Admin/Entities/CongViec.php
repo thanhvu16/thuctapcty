@@ -23,6 +23,10 @@ class   CongViec extends Model
     {
         return $this->belongsTo(User::class, 'nguoi_giao', 'id');
     }
+    public function SinhVien()
+    {
+        return $this->belongsTo(User::class, 'sinh_vien_id', 'id');
+    }
 
 
 

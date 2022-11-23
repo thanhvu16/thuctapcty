@@ -73,6 +73,26 @@
                     </div>
 
                     <div class="form-group col-md-4">
+                        <label class="col-form-label" for="quyen-han">Khoa </label>
+                        <select class="form-control select2" name="khoa" >
+                            <option value="">--Chọn khoa -</option>
+                            @foreach($khoa as $dsKHoa)
+                                <option value="{{$dsKHoa->id}}" {{ isset($user) && $user->khoa_id == $dsKHoa->id ? 'selected' : '' }}>{{$dsKHoa->ten_khoa}}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="quyen-han">Giảng viên hướng dẫn </label>
+                        <select class="form-control select2" name="giang_vien" >
+                            <option value="">--Chọn giảng viên hướng dẫn -</option>
+                            @foreach($giangVien as $dsGV)
+                                <option value="{{$dsGV->id}}" {{ isset($user) && $user->giang_vien == $dsGV->id ? 'selected' : '' }}>{{$dsGV->fullname}}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
                         <label class="col-form-label" for="quyen-han">Doanh nghiệp </label>
                         <select class="form-control select2" name="doanh_nghiep" >
                             <option value="">--Chọn doanh nghiệp -</option>

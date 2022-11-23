@@ -23,6 +23,12 @@
                                         style="color: red">*</span> </label>
                                 <textarea name="noi_dung" class="form-control" id=""required ></textarea>
                             </div>
+                            <div class="form-group col-md-12 text-right">
+                                <a role="button" class="btn btn-primary" onclick="themct()" style="cursor: pointer"><i class="fa fa-plus-square"></i> Thêm công việc chi tiết</a>
+                            </div>
+                            <div class="form-group col-md-12 ">
+                                <div class="row themtt"></div>
+                            </div>
                             <div class="form-group col-md-4">
                                 <label class="col-form-label" for="quyen-han">Sinh viên thực hiện<span
                                         style="color: red">*</span> </label>
@@ -65,4 +71,40 @@
         </div>
     </section>
 
+@endsection
+@section('script')
+    <script>
+        $("body").on("click", ".btn-remove-file", function () {
+console.log(1);
+            $(this).parents(".remove-multi-file").remove();
+        });
+        function themct() {
+            let htmlForm = `
+                <div class="remove-multi-file">
+                            <div class="form-group col-md-8 ">
+                                <label class="col-form-label" for="password"><span style="color: red">(-)</span> Nội dung chi tiết </label>
+                                <textarea name="noi_dung_ct[]" class="form-control" id="" ></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail4">Hạn xử lý</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control datepicker"
+                                               name="han_xu_ly_ct[]" id="exampleInputEmail5" value=""
+                                               placeholder="dd/mm/yyyy" >
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-md-2 input-group-btn customize-group-btn mt-4">
+                                    <span class="btn btn-danger btn-remove-file btn-sm" type="button">
+                                    <i class="fa fa-close"></i></span>
+                            </div>
+                </div>`;
+
+        $('.themtt').append(htmlForm);
+        }
+    </script>
 @endsection

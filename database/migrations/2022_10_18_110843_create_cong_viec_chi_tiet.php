@@ -16,7 +16,7 @@ class CreateCongViecChiTiet extends Migration
         Schema::create('cong_viec_chi_tiet', function (Blueprint $table) {
             $table->id();
             $table->integer('cong_viec_id')->nullable();
-            $table->integer('noi_dung')->nullable();
+            $table->string('noi_dung')->nullable();
             $table->date('han_xu_ly')->nullable();
             $table->string('ket_qua')->nullable();
             $table->string('file')->nullable();

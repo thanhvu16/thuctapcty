@@ -5,6 +5,8 @@ $("body").on("click", ".btn-remove-file", function () {
 
 
 
+
+
 function noidungvanban(fileName) {
     let htmlForm = `<div class="remove-multi-file">
                      <div class="row">

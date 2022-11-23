@@ -47,6 +47,7 @@ CONST QUAN_TRI_HT = 'quản trị hệ thống';
 CONST NHA_TRUONG = 'Nhà trường';
 CONST SINH_VIEN= 'Sinh viên';
 CONST DOANH_NGHIEP= 'Doanh nghiệp';
+CONST GIANG_VIEN= 'Giảng viên';
 
 
 

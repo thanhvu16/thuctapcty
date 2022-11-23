@@ -8,14 +8,14 @@
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title" style="font-size: 16px !important;">Công việc mới chờ xử lý </h3>
+                        <h3 class="box-title" style="font-size: 16px !important;">Công việc giao đã hoàn thành </h3>
                     </div>
 
 
                     <!-- /.box-header -->
                     <div class="col-md-12" style="margin-top: 20px">
                         <div class="row">
-                            <form action="{{route('cong-viec.index')}}" method="get">
+                            <form action="{{route('congViecDaHoanThanh')}}" method="get">
 
                                 <div class="col-md-3 form-group">
                                     <label for="exampleInputEmail1">Tìm theo nội dung công việc</label>
@@ -48,12 +48,12 @@
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
                                     <td class="text-center" style="vertical-align: middle;color: red">{{formatDMY($data->han_xu_ly)}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->noi_dung}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->nguoiGiao->fullname ?? ''}}</td>
+                                    <td class="text-left" style="vertical-align: middle"><a href="">{{$data->noi_dung}}</a></td>
+                                    <td class="text-left" style="vertical-align: middle">{{$data->SinhVien->fullname ?? ''}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
                                     <td class="text-center">
                                         @if($data->trang_thai == 1)
-                                            <span class="label label-pill label-sm label-success">Mới nhận</span>
+                                        <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
                                             <span class="label label-pill label-sm label-success">Đang thực hiện</span>
                                         @elseif($data->trang_thai == 3)

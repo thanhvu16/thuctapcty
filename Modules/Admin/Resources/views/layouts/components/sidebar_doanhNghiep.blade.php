@@ -5,7 +5,7 @@
             </span>
     </a>
 </li>
-<li class="treeview  {{  Route::is('cong-viec.create') || Route::is('cong-viec.create')  ? 'active menu-open' : '' }}  ">
+<li class="treeview  {{  Route::is('cong-viec.create') || Route::is('cong-viec.create')|| Route::is('congViecDaGiao')|| Route::is('congViecDaHoanThanh')  ? 'active menu-open' : '' }}  ">
 
 
     <a href="#">
@@ -16,7 +16,7 @@
     </a>
     <ul class="treeview-menu">
         <li class="{{ Route::is('cong-viec.create') ? 'active' : '' }}"><a href="{{route('cong-viec.create')}}"><i class="fa fa-circle-o"></i> Giao việc</a></li>
-        <li class="{{ Route::is('vai-tro.index') ? 'active' : '' }}"><a href=""><i class="fa fa-circle-o"></i>Công việc đang xử lý </a></li>
-        <li class="{{ Route::is('vai-tro.index') ? 'active' : '' }}"><a href=""><i class="fa fa-circle-o"></i>Công việc đã hoàn thành</a></li>
+        <li class="{{ Route::is('congViecDaGiao') ? 'active' : '' }}"><a href="{{route('congViecDaGiao')}}"><i class="fa fa-circle-o"></i>Công việc đang xử lý </a></li>
+        <li class="{{ Route::is('congViecDaHoanThanh') ? 'active' : '' }}"><a href="{{route('congViecDaHoanThanh')}}"><i class="fa fa-circle-o"></i>Công việc đã hoàn thành</a></li>
     </ul>
 </li>

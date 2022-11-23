@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Hash, DB, Auth, Session;
 use Modules\Admin\Entities\DoanhNghiep;
 use Modules\Admin\Entities\HeSoTheLoai;
+use Modules\Admin\Entities\Khoa;
 use Modules\Admin\Entities\NguonTin;
 use Modules\Admin\Entities\DonVi;
 use Modules\Admin\Entities\NhomDonVi;
@@ -82,9 +83,11 @@ class NguoiDungController extends Controller
 //        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
         $danhSachDonVi = null;
         $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
+        $khoa = Khoa::all();
+        $giangVien = User::role([GIANG_VIEN])->whereNull('deleted_at')->get();
 
         return view('admin::nguoi-dung.create',
-            compact('roles','danhSachDonVi','doanhNghiep'));
+            compact('roles','danhSachDonVi','doanhNghiep','khoa','giangVien'));
     }
 
     /**
@@ -120,6 +123,8 @@ class NguoiDungController extends Controller
         $user->birthday =  !empty($request->ngay_ban_hanh) ? formatYMD($request->ngay_ban_hanh) : null;
         $user->role_id =  $request->role_id;
         $user->username =  $request->username;
+        $user->giang_vien =  $request->giang_vien;
+        $user->khoa_id =  $request->khoa;
         $user->fullname =  $request->fullname;
         $user->doanh_nghiep =  $request->doanh_nghiep;
         $user->email =  $request->email;
@@ -153,56 +158,9 @@ class NguoiDungController extends Controller
 
     }
 
-    public function cauHinhEmailDonVi()
-    {
-        $user = auth::user();
-        $donViId = null;
-        if ($user->hasRole(VAN_THU_HUYEN)) {
-            $lanhDaoSo = User::role([CHU_TICH])
-                ->whereHas('donVi', function ($query) {
-                    return $query->whereNull('cap_xa');
-                })->first();
 
-            $donViId = $lanhDaoSo->don_vi_id ?? null;
-        } else {
-            $donViId = $user->donVi->parent_id;
-        }
 
-        $donVi = DonVi::findOrFail($donViId);
 
-        return view('admin::Don_vi.cau_hinh_email', compact('donVi'));
-    }
-
-    public function luuCauHinhEmailDonVi(Request $request)
-    {
-        $user = auth::user();
-        $donViId = null;
-        if ($user->hasRole(VAN_THU_HUYEN)) {
-            $lanhDaoSo = User::role([CHU_TICH])
-                ->whereHas('donVi', function ($query) {
-                    return $query->whereNull('cap_xa');
-                })->first();
-
-            $donViId = $lanhDaoSo->don_vi_id ?? null;
-        } else {
-            $donViId = $user->donVi->parent_id;
-        }
-
-        $donVi = DonVi::findOrFail($donViId);
-        if ($donVi) {
-            $donVi->email = $request->email;
-            if ($request->update_password) {
-                $donVi->password = $request->password;
-            }
-            $donVi->status_email = $request->status_email;
-            $donVi->save();
-
-            return redirect()->back()->with('success', 'Lưu cấu hình thành công .');
-        }
-
-        return redirect()->back()->with('warning', 'Không tìm thấy dữ liệu vui lòng kiểm tra.');
-
-    }
 
     public function guiXuLy(Request $request)
     {
@@ -250,9 +208,10 @@ class NguoiDungController extends Controller
         $arrPermissionId = $permissionUser->pluck('id')->toArray();
 //        $danhSachDonVi = ToChuc::orderBy('ten_don_vi', 'asc')->get();
 
-
+        $khoa = Khoa::all();
+        $giangVien = User::role([GIANG_VIEN])->whereNull('deleted_at')->get();
         return view('admin::nguoi-dung.edit', compact('user', 'donViId',
-            'roles',  'danhSachPhongBan', 'donVi', 'arrPermissionId','doanhNghiep'));
+            'roles',  'danhSachPhongBan', 'donVi', 'arrPermissionId','doanhNghiep','khoa','giangVien'));
     }
 
     /**
@@ -274,6 +233,8 @@ class NguoiDungController extends Controller
         $user->role_id =  $request->role_id;
         $user->username =  $request->username;
         $user->fullname =  $request->fullname;
+        $user->giang_vien =  $request->giang_vien;
+        $user->khoa_id =  $request->khoa;
         $user->email =  $request->email;
         $user->doanh_nghiep =  $request->doanh_nghiep;
 

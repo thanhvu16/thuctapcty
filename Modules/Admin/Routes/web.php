@@ -31,11 +31,13 @@ Route::post('the-loai-con/delete/{id}', array('as' => 'xoaTheLoaiCon', 'uses' =>
 Route::resource('he-so-nhuan-but', 'HeSoNhuanButController');
 Route::resource('vai-tro', 'VaiTroController');
 Route::resource('chuc-nang', 'ChucNangController');
+Route::resource('khoa', 'KhoaController');
 Route::resource('tieu-chuan', 'TieuChuanController');
 Route::resource('don-vi-to-chuc', 'ToChucController');
 Route::get('lay-du-lieu', 'ToChucController@getlistcb')->name('getlistcb');
 Route::get('sua-don-vi-to-chuc/{id}', array('as' => 'suadvtc', 'uses' => 'ToChucController@edit'));
 Route::get('xoa-don-vi-to-chuc/{id}', array('as' => 'suadvtc', 'uses' => 'ToChucController@destroy'));
+Route::get('xoa-khoa/{id}', array('as' => 'xoakhoa', 'uses' => 'KhoaController@destroy'));
 
 //Đơn giá
 Route::resource('don-gia', 'DonGiaController');
