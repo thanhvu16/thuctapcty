@@ -12,6 +12,7 @@ define('UPLOAD_FILE_TAI_LIEU', 'uploads/tai-lieu-huong-dan');
 define('UPLOAD_FILE_CUOC_HOP', 'uploads/cuoc-hop');
 define('UPLOAD_FILE_GIAY_MOI_DEN', 'uploads/giay-moi-den-'.date('Y'));
 define('FILE_Y_KIEN_GOP_Y', 'uploads/gop-y');
+define('FILE_KET_QUA', 'uploads/ket-qua');
 define('UPLOAD_GIAI_QUYET_VAN_BAN_DEN', 'uploads/van-ban-den/giai-quyet-'.date('Y'));
 define('UPLOAD_FILE_VAN_BAN_DEN_TRA_LAI', 'uploads/van-ban-den/tra-lai-'.date('Y'));
 define('THU_MUC_CONG_VIEC_DON_VI', 'uploads/cong_viec_don_vi'.'_'.date('Y'));
@@ -48,6 +49,7 @@ CONST NHA_TRUONG = 'Nhà trường';
 CONST SINH_VIEN= 'Sinh viên';
 CONST DOANH_NGHIEP= 'Doanh nghiệp';
 CONST GIANG_VIEN= 'Giảng viên';
+CONST GIAO_VU_KHOA= 'Giáo vụ khoa';
 
 
 

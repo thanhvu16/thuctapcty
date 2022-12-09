@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use DB, Hash;
+use Modules\Admin\Entities\BaiViet;
 use Modules\Admin\Entities\CongViec;
 use auth,File;
 use Modules\Admin\Entities\CongViecChiTiet;
@@ -58,6 +59,84 @@ class GiaoViecController extends Controller
             ->paginate(PER_PAGE);
         return view('dangky::cong-viec.CongViecHT', compact('CongViec'));
     }
+    public function congViecDaNhan(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $CongViec = CongViec::whereNull('deleted_at')
+            ->where('sinh_vien_id', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })->where('trang_thai', 2)
+            ->paginate(PER_PAGE);
+        return view('dangky::cong-viec.CongViecDaNhan', compact('CongViec'));
+    }
+    public function congViecDaNhanHT(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $CongViec = CongViec::whereNull('deleted_at')
+            ->where('sinh_vien_id', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })->where('trang_thai', 3)
+            ->paginate(PER_PAGE);
+        return view('dangky::cong-viec.CongViecDaNhanHT', compact('CongViec'));
+    }
+    public function capNhatCV(Request $request,$id)
+    {
+        $CongViec = CongViec::find($id);
+        $CongViec->trang_thai = 2;
+        $CongViec->save();
+
+        return redirect()->back()->with('success', 'Cập nhật công việc thành công !');
+    }
+    public function capNhatCVHT(Request $request,$id)
+    {
+        $CongViec = CongViec:: where('sinh_vien_id', auth::user()->id)->find($id);
+        $CongViec->trang_thai = 3;
+        $CongViec->save();
+
+        return redirect()->back()->with('success', 'Cập nhật công việc thành công !');
+    }
+
+    public function capNhatKetQua(Request $request,$id)
+    {
+        $file = $request->file_kq;
+        $uploadPath = FILE_KET_QUA;
+        $CongViec = CongViecChiTiet::find($id);
+        $CongViec->ket_qua = $request->y_kien;
+        $CongViec->thoi_gian_ht = date('Y-m-d');
+        $CongViec->save();
+        if ($file) {
+                $fileName = date('Y_m_d') . '_' . Time() . '_' . $file->getClientOriginalName();
+                $urlFile = FILE_KET_QUA . '/' . $fileName;
+                if (!File::exists($uploadPath)) {
+                    File::makeDirectory($uploadPath, 0777, true, true);
+                }
+                $file->move($uploadPath, $fileName);
+                $CongViec->file = $urlFile;
+                $CongViec->save();
+        }
+        return redirect()->back()->with('success', 'Cập nhật công việc thành công !');
+    }
+
+    public function JSBaiViet(Request $request)
+    {
+        $id = $request->get('id');
+        $data = CongViecChiTiet::where('id',$id)->first();
+        $returnHTML = $data ? view('dangky::cong-viec.jsbv', compact('data'))->render() : '';
+
+        return response()->json(
+            [
+                'is_relate' => $data ? true : false,
+                'html' => $returnHTML,
+            ]
+        );
+    }
+
 
     /**
      * Show the form for creating a new resource.

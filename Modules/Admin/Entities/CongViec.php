@@ -19,6 +19,10 @@ class   CongViec extends Model
     {
         return $this->belongsTo(CongViecChiTiet::class, 'id', 'cong_viec_id');
     }
+    public function CTcongViec()
+    {
+        return $this->hasMany(CongViecChiTiet::class, 'cong_viec_id', 'id');
+    }
     public function nguoiGiao()
     {
         return $this->belongsTo(User::class, 'nguoi_giao', 'id');

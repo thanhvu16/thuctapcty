@@ -20,7 +20,10 @@ class   CongViecChiTiet extends Model
         return $this->belongsTo(CongViecChiTiet::class, 'cong_viec_id', 'id');
     }
 
-
+    public function getUrlFile()
+    {
+        return asset($this->file);
+    }
 
 
 

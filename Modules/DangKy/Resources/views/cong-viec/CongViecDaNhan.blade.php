@@ -8,14 +8,14 @@
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title" style="font-size: 16px !important;">Công việc mới chờ xử lý </h3>
+                        <h3 class="box-title" style="font-size: 16px !important;">Công việc đã nhận đang thực hiện</h3>
                     </div>
 
 
                     <!-- /.box-header -->
                     <div class="col-md-12" style="margin-top: 20px">
                         <div class="row">
-                            <form action="{{route('cong-viec.index')}}" method="get">
+                            <form action="{{route('congViecDaNhan')}}" method="get">
 
                                 <div class="col-md-3 form-group">
                                     <label for="exampleInputEmail1">Tìm theo nội dung công việc</label>
@@ -48,21 +48,21 @@
                             <tbody>
                             @forelse($CongViec as $key=>$data)
                                 <tr>
-                                    <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
-                                    <td class="text-center" style="vertical-align: middle;color: red">{{formatDMY($data->han_xu_ly)}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->noi_dung}}</td>
-                                    <td class="text-left" style="vertical-align: middle">
+                                    <td class="text-center" >{{$key+1}}</td>
+                                    <td class="text-center" >{{formatDMY($data->han_xu_ly)}}</td>
+                                    <td class="text-left" ><a href="">{{$data->noi_dung}}</a></td>
+                                    <td class="text-left" >
                                         @if(count($data->CTcongViec) > 0)
-                                            @foreach($data->CTcongViec as $cv)
-                                                - {{$cv->noi_dung}} (<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) <br>
-                                            @endforeach
+                                        @foreach($data->CTcongViec as $cv)
+                                                <a  onclick="layDULieu({{$cv->id}})">- {{$cv->noi_dung}}(<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) </a>    <br> <br>
+                                        @endforeach
                                         @endif
                                     </td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->nguoiGiao->fullname ?? ''}}</td>
-                                    <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
+                                    <td class="text-left" >{{$data->SinhVien->fullname ?? ''}}</td>
+                                    <td class="text-center" >{{formatDMY($data->created_at)}}</td>
                                     <td class="text-center">
                                         @if($data->trang_thai == 1)
-                                            <span class="label label-pill label-sm label-success">Mới nhận</span>
+                                        <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
                                             <span class="label label-pill label-sm label-success">Đang thực hiện</span>
                                         @elseif($data->trang_thai == 3)
@@ -82,15 +82,14 @@
 
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn-action btn  btn-primary btn-icon btn-light btn-sm nhan-viec"
-                                           href="{{route('capNhatCV',$data->id)}}" style="color: white !important;" role="button" title="Sửa">
-                                            <i class="fa fa-check-square-o"></i> Nhận
+                                        <a class="btn-action btn  btn-primary btn-icon btn-light btn-sm btn-remove-item-duyet" href="{{route('capNhatCVHT',$data->id)}}" style="color: white !important;" role="button" >
+                                            <i class="fa fa-check-square-o"></i> Hoàn thành
                                         </a>
                                     </td>
 
                                 </tr>
                             @empty
-                                <td class="text-center" colspan="8" style="vertical-align: middle">Không có công việc nào được giao !
+                                <td class="text-center" colspan="8" style="vertical-align: middle">Không có công việc nào đang xử lý !
                                 </td>
                             @endforelse
 
@@ -107,6 +106,44 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="moda-search" class="modal fade" role="dialog">
+
+                        </div>
+{{--                        <div class="modal fade" id="myModal">--}}
+{{--                            <div class="modal-dialog">--}}
+{{--                                <div class="modal-content">--}}
+{{--                                    <form action="" method="POST" enctype="multipart/form-data">--}}
+{{--                                        @csrf--}}
+{{--                                        <div class="modal-header">--}}
+{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>--}}
+{{--                                            </button>--}}
+{{--                                            <h4 class="modal-title"><i--}}
+{{--                                                    class="fa fa-folder-open-o"></i> Tải nhiều tệp tin</h4>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-body">--}}
+{{--                                            <div class="row">--}}
+{{--                                                <div class="form-group col-md-12">--}}
+{{--                                                    <label for="sokyhieu" class="">Chọn tệp--}}
+{{--                                                        tin<br><small><i>(Đặt tên file theo định dạng: số đến (vd:--}}
+{{--                                                                1672.pdf))</i></small>--}}
+{{--                                                    </label>--}}
+
+{{--                                                    <input type="file" multiple name="ten_file[]"--}}
+{{--                                                           accept=".xlsx,.xls,.doc,.docx,.txt,.pdf"/>--}}
+{{--                                                    <input type="text" id="url-file" value="123"--}}
+{{--                                                           class="hidden" name="txt_file[]">--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-group col-md-4" >--}}
+{{--                                                    <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i> Tải lên</button>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-footer">--}}
+{{--                                        </div>--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <!-- /.box-body -->
 
@@ -115,4 +152,27 @@
         </div>
     </section>
 
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+
+        function showModal() {
+            console.log(1);
+            $("#myModal").modal('show');
+        }
+        function layDULieu($id)
+        {
+            $.ajax({
+                url: APP_URL + '/lay-bai-viet?id='+$id,
+                type: 'GET',
+                beforeSend: showLoading(),
+                dataType: 'json',
+            }).done(function (res) {
+                hideLoading();
+                $('#moda-search').html(res.html);
+                $('#moda-search').modal('show');
+            });
+        }
+    </script>
 @endsection

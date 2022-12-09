@@ -25,5 +25,12 @@ Route::get('quan-ly-sinh-vien', 'DangKyController@sinhVien')->name('quanly');
 
 //công việc
 Route::resource('cong-viec', 'GiaoViecController');
+Route::resource('xu-ly', 'XuLyController');
 Route::get('danh-sach-cong-viec-da-giao', 'GiaoViecController@congViecDaGiao')->name('congViecDaGiao');
 Route::get('danh-sach-cong-viec-hoan-thanh', 'GiaoViecController@congViecDaHoanThanh')->name('congViecDaHoanThanh');
+Route::get('{id}/cap-nhat-cv.html', 'GiaoViecController@capNhatCV')->name('capNhatCV');
+Route::get('danh-sach-cong-viec-da-nhan', 'GiaoViecController@congViecDaNhan')->name('congViecDaNhan');
+Route::get('danh-sach-cong-viec-da-nhan-hoan-thanh', 'GiaoViecController@congViecDaNhanHT')->name('congViecDaNhanHT');
+Route::get('lay-bai-viet', 'GiaoViecController@JSBaiViet')->name('JSBaiViet');
+Route::post('cap-nhat-ket-qua-giao-viec/{id}', 'GiaoViecController@capNhatKetQua')->name('capNhatKetQua');
+Route::get('{id}/cap-nhat-cv-hoan-thanh.html', 'GiaoViecController@capNhatCVHT')->name('capNhatCVHT');

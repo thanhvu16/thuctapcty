@@ -8,14 +8,14 @@
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title" style="font-size: 16px !important;">Công việc mới chờ xử lý </h3>
+                        <h3 class="box-title" style="font-size: 16px !important;">Công việc đã hoàn thành </h3>
                     </div>
 
 
                     <!-- /.box-header -->
                     <div class="col-md-12" style="margin-top: 20px">
                         <div class="row">
-                            <form action="{{route('cong-viec.index')}}" method="get">
+                            <form action="{{route('congViecDaNhanHT')}}" method="get">
 
                                 <div class="col-md-3 form-group">
                                     <label for="exampleInputEmail1">Tìm theo nội dung công việc</label>
@@ -42,7 +42,6 @@
                                 <th width="11%" class="text-center">Người giao </th>
                                 <th width="11%" class="text-center">Ngày giao </th>
                                 <th width="10%" class="text-center">Trạng thái</th>
-                                <th width="10%" class="text-center">Tác vụ</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,19 +49,19 @@
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
                                     <td class="text-center" style="vertical-align: middle;color: red">{{formatDMY($data->han_xu_ly)}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->noi_dung}}</td>
+                                    <td class="text-left" style="vertical-align: middle"><a href="">{{$data->noi_dung}}</a></td>
                                     <td class="text-left" style="vertical-align: middle">
                                         @if(count($data->CTcongViec) > 0)
                                             @foreach($data->CTcongViec as $cv)
-                                                - {{$cv->noi_dung}} (<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) <br>
+                                                <a  onclick="layDULieu({{$cv->id}})">- {{$cv->noi_dung}}(<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) </a>    <br> <br>
                                             @endforeach
                                         @endif
                                     </td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->nguoiGiao->fullname ?? ''}}</td>
+                                    <td class="text-left" style="vertical-align: middle">{{$data->SinhVien->fullname ?? ''}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
                                     <td class="text-center">
                                         @if($data->trang_thai == 1)
-                                            <span class="label label-pill label-sm label-success">Mới nhận</span>
+                                        <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
                                             <span class="label label-pill label-sm label-success">Đang thực hiện</span>
                                         @elseif($data->trang_thai == 3)
@@ -81,16 +80,10 @@
 {{--                                        </form>--}}
 
                                     </td>
-                                    <td class="text-center">
-                                        <a class="btn-action btn  btn-primary btn-icon btn-light btn-sm nhan-viec"
-                                           href="{{route('capNhatCV',$data->id)}}" style="color: white !important;" role="button" title="Sửa">
-                                            <i class="fa fa-check-square-o"></i> Nhận
-                                        </a>
-                                    </td>
 
                                 </tr>
                             @empty
-                                <td class="text-center" colspan="8" style="vertical-align: middle">Không có công việc nào được giao !
+                                <td class="text-center" colspan="6" style="vertical-align: middle">Không có công việc nào được giao !
                                 </td>
                             @endforelse
 
@@ -109,10 +102,35 @@
                         </div>
                     </div>
                     <!-- /.box-body -->
+                    <div id="moda-search" class="modal fade" role="dialog">
 
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+
+        function showModal() {
+            console.log(1);
+            $("#myModal").modal('show');
+        }
+        function layDULieu($id)
+        {
+            $.ajax({
+                url: APP_URL + '/lay-bai-viet?id='+$id,
+                type: 'GET',
+                beforeSend: showLoading(),
+                dataType: 'json',
+            }).done(function (res) {
+                hideLoading();
+                $('#moda-search').html(res.html);
+                $('#moda-search').modal('show');
+            });
+        }
+    </script>
 @endsection

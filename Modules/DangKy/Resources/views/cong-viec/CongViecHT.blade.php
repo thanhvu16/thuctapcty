@@ -38,6 +38,7 @@
                                 <th width="5%" class="text-center">STT</th>
                                 <th width="11%" class="text-center">Hạn xử lý</th>
                                 <th width="" class="text-center">Nội dung công việc</th>
+                                <th width="20%" class="text-center">Công việc chi tiết</th>
                                 <th width="11%" class="text-center">Người giao </th>
                                 <th width="11%" class="text-center">Ngày giao </th>
                                 <th width="10%" class="text-center">Trạng thái</th>
@@ -49,6 +50,13 @@
                                     <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
                                     <td class="text-center" style="vertical-align: middle;color: red">{{formatDMY($data->han_xu_ly)}}</td>
                                     <td class="text-left" style="vertical-align: middle"><a href="">{{$data->noi_dung}}</a></td>
+                                    <td class="text-left" style="vertical-align: middle">
+                                        @if(count($data->CTcongViec) > 0)
+                                            @foreach($data->CTcongViec as $cv)
+                                                - {{$cv->noi_dung}}(<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) <br>
+                                            @endforeach
+                                        @endif
+                                    </td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->SinhVien->fullname ?? ''}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
                                     <td class="text-center">

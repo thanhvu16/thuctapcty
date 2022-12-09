@@ -43,6 +43,10 @@ $('.btn-remove-item').on('click', function () {
 
     return confirm('Bạn muốn xóa dữ liệu này?');
 });
+$('.nhan-viec').on('click', function () {
+
+    return confirm('Bạn muốn nhận công việc này?');
+});
 $('.btn-remove-item-duyet').on('click', function () {
 
     return confirm('Bạn có chắc chắc muốn duyệt?');

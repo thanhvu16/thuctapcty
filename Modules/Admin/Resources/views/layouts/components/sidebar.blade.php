@@ -28,6 +28,10 @@
             @include('admin::layouts.components.sidebar_doanhNghiep')
             @endrole
 
+            @role(GIAO_VU_KHOA)
+            @include('admin::layouts.components.sidebar_giao_vu')
+            @endrole
+
         </ul>
     </section>
     <!-- /.sidebar -->
