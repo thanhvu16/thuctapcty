@@ -1,35 +1,31 @@
 
 
-<li class="treeview {{ Route::is('nguoi-dung.index') || Route::is('nguoi-dung.create') || Route::is('chuc-nang.index') ? 'active menu-open' : '' }} }} ">
+
+<li class="treeview {{ Route::is('taoGiaoVuAdmin') || Route::is('DSGiaoVuAdmin')  ? 'active menu-open' : '' }} }} ">
     <a href="#">
-        <i class="fa fa-cogs"></i> <span>Quản lý tài khoản</span>
+        <i class="fa fa-cogs"></i> <span>Quản lý giáo vụ</span>
         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
     </a>
     <ul class="treeview-menu">
-        <li class="{{ Route::is('nguoi-dung.index') ? 'active' : '' }}"><a href="{{ route('nguoi-dung.index') }}"><i class="fa fa-circle-o"></i> Người dùng</a></li>
-        <li class="{{ Route::is('vai-tro.index') ? 'active' : '' }}"><a href="{{ route('vai-tro.index') }}"><i class="fa fa-circle-o"></i>Quyền hạn</a></li>
+        <li class="{{ Route::is('DSGiaoVuAdmin') ? 'active' : '' }}"><a href="{{ route('DSGiaoVuAdmin') }}"><i class="fa fa-circle-o"></i> Danh sách giáo vụ</a></li>
+        <li class="{{ Route::is('taoGiaoVuAdmin') ? 'active' : '' }}"><a href="{{ route('taoGiaoVuAdmin') }}"><i class="fa fa-circle-o"></i> Tạo giáo vụ</a></li>
     </ul>
 </li>
-<li class="{{  Route::is('doanh-nghiep.index') ? 'active' : '' }} ">
-    <a href="{{route('doanh-nghiep.index')}}">
-        <i class="fa fa-user-plus" ></i> <span>Quản lý doanh nghiệp</span>
+
+
+<li class="treeview {{ Route::is('taoGiaoVuAdmin') || Route::is('DSGiaoVuAdmin')  ? 'active menu-open' : '' }} }} ">
+    <a href="#">
+        <i class="fa fa-cogs"></i> <span>Quản lý sinh viên</span>
         <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
     </a>
+    <ul class="treeview-menu">
+        <li class="{{ Route::is('DSGiaoVuAdmin') ? 'active' : '' }}"><a href="{{ route('DSGiaoVuAdmin') }}"><i class="fa fa-circle-o"></i> Danh sách giáo vụ</a></li>
+        <li class="{{ Route::is('taoGiaoVuAdmin') ? 'active' : '' }}"><a href="{{ route('taoGiaoVuAdmin') }}"><i class="fa fa-circle-o"></i> Tạo giáo vụ</a></li>
+    </ul>
 </li>
-<li class="{{  Route::is('khoa.index') ? 'active' : '' }} ">
-    <a href="{{route('khoa.index')}}">
-        <i class="fa  fa-recycle" ></i> <span>Quản lý khoa</span>
-        <span class="pull-right-container">
-            </span>
-    </a>
-</li>
-<li class="{{  Route::is('nhaTruong') ? 'active' : '' }} ">
-    <a href="{{route('nhaTruong')}}">
-        <i class="fa fa-user-plus" ></i> <span>Quản lý sinh viên đăng ký</span>
-        <span class="pull-right-container">
-            </span>
-    </a>
-</li>
+
+

@@ -128,6 +128,7 @@ class NguoiDungController extends Controller
         $user->fullname =  $request->fullname;
         $user->doanh_nghiep =  $request->doanh_nghiep;
         $user->email =  $request->email;
+        $user->ma_sv =  $request->username;
         if (!empty($data['anh_dai_dien'])) {
             $inputFile = $data['anh_dai_dien'];
             $uploadPath = public_path(UPLOAD_USER);
@@ -137,7 +138,7 @@ class NguoiDungController extends Controller
             $user->avatar =  $url;
         }
 
-        $user->status =  $request->trang_thai;
+        $user->status =  1;
         if (!empty($data['password'])) {
             $user->password = Hash::make($data['password']);
         }
@@ -154,7 +155,7 @@ class NguoiDungController extends Controller
             $user->syncPermissions($data['permission']);
         }
 
-        return redirect()->route('nguoi-dung.index')->with('success', 'Thêm mới thành công .');
+        return redirect()->back()->with('success', 'Thêm mới thành công .');
 
     }
 
