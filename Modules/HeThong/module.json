@@ -1,0 +1,13 @@
+{
+    "name": "HeThong",
+    "alias": "hethong",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\HeThong\\Providers\\HeThongServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

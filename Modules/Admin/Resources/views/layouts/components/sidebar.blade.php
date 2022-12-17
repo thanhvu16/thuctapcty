@@ -32,6 +32,10 @@
             @include('admin::layouts.components.sidebar_giao_vu')
             @endrole
 
+            @role(TRUONG_KHOA)
+            @include('admin::layouts.components.sidebar_truongkhoa')
+            @endrole
+
         </ul>
     </section>
     <!-- /.sidebar -->

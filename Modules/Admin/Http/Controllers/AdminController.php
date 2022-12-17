@@ -60,13 +60,19 @@ class AdminController extends Controller
             return redirect()->route('nguoi-dung.index');
         }
         if ($user->hasRole(NHA_TRUONG)) {
-            return redirect()->route('nhaTruong');
+            return redirect()->route('DSGiaoVuAdmin');
         }
         if ($user->hasRole(DOANH_NGHIEP)) {
             return redirect()->route('quanly');
         }
         if ($user->hasRole(SINH_VIEN)) {
             return redirect()->route('cong-viec.index');
+        }
+        if ($user->hasRole(TRUONG_KHOA)) {
+            return redirect()->route('phanCong');
+        }
+        if ($user->hasRole(GIAO_VU_KHOA)) {
+            return redirect()->route('DSGiaoVienHD');
         }
 
         dd(auth::user());

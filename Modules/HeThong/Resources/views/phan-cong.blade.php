@@ -14,7 +14,7 @@
                                 data-toggle="collapse"
                                 href="#collapseExample"
                                 aria-expanded="false" aria-controls="collapseExample">
-                             {{ isset($ngayNghi) ? 'CẬP NHẬT' : 'THÊM' }} KHOA
+                            {{ isset($ngayNghi) ? 'CẬP NHẬT' : 'THÊM' }} KHOA
                         </button>
                     </div>
                     @endrole
@@ -40,12 +40,12 @@
                                            name="ten"
                                            placeholder="Tên khoa">
                                 </div>
-{{--                                <div class="col-md-3 form-group">--}}
-{{--                                    <label for="exampleInputEmail1">Tìm theo tên viết tắt</label>--}}
-{{--                                    <input type="text" class="form-control" value="{{Request::get('ten_viet_tat')}}"--}}
-{{--                                           name="ten_viet_tat"--}}
-{{--                                           placeholder="Tên viết tắt">--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-md-3 form-group">--}}
+                                {{--                                    <label for="exampleInputEmail1">Tìm theo tên viết tắt</label>--}}
+                                {{--                                    <input type="text" class="form-control" value="{{Request::get('ten_viet_tat')}}"--}}
+                                {{--                                           name="ten_viet_tat"--}}
+                                {{--                                           placeholder="Tên viết tắt">--}}
+                                {{--                                </div>--}}
                                 <div class="col-md-3" style="margin-top: 20px">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm Kiếm</button>
                                 </div>
@@ -59,37 +59,42 @@
                             <thead>
                             <tr>
                                 <th width="2%" class="text-center">STT</th>
-                                <th width="20%" class="text-center">Tên khoa</th>
-                                <th width="3%" class="text-center">Tác Vụ</th>
+                                <th width="" class="text-center">Tên khoa</th>
+                                <th width="15%" class="text-center">Giảng viên hướng dẫn</th>
+                                <th width="15%" class="text-center">Giáo vụ khoa</th>
+                                <th width="8%" class="text-center">Tác Vụ</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($listNgayNghi as $key => $ngayNghi)
+                                <form action="{{route('postphanCong',$ngayNghi->id)}}" id="pc-{{$ngayNghi->id}}" method="post">
+                                    @csrf
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle">{{ $key+1 }}</td>
                                     <td class="text-left"
                                         style="vertical-align: middle">{{ $ngayNghi->ten_khoa }}</td>
+                                    <td>
+                                        <select class="form-control select2" form="pc-{{$ngayNghi->id}}" name="giang_vien" >
+                                                <option value="" >Lựa chọn</option>
+                                                @foreach($giangVien as $ic)
+                                                    <option value="{{ $ic->id }}" {{$ngayNghi->giang_vien_hd == $ic->id ? 'selected' : ''}} >{{$ic->fullname }}</option>
+                                                @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control select2" form="pc-{{$ngayNghi->id}}" name="giao_vu" >
+                                                <option value="" >Lựa chọn </option>
+                                                @foreach($giaoVu as $ic2)
+                                                    <option value="{{ $ic2->id }}"  {{$ngayNghi->giao_vu == $ic2->id ? 'selected' : ''}} >{{$ic2->fullname }}</option>
+                                                @endforeach
+                                        </select>
+                                    </td>
                                     <td class="text-center">
-                                        @role(NHA_TRUONG)
-                                        <a class="btn-action btn btn-color-blue btn-icon btn-light btn-sm"
-                                           href="{{ route('khoa.index', 'id='.$ngayNghi->id) }}" role="button"
-                                           title="Sửa">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <form method="POST" action="{{ route('khoa.destroy', $ngayNghi->id) }}"
-                                              accept-charset="UTF-8" style="display:inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button
-                                                class="btn btn-action btn-color-red btn-icon btn-ligh btn-sm btn-remove-item"
-                                                role="button" title="Xóa">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
-                                        </form>
-                                        @endrole
+                                        <button type="submit" form="pc-{{$ngayNghi->id}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Phân công</button>
                                     </td>
 
                                 </tr>
+                                </form>
                             @empty
                                 <td class="text-center" colspan="6" style="vertical-align: middle">Không có dữ liệu !
                                 </td>
@@ -103,7 +108,7 @@
                                     Tổng số khoa: <b>{{ $listNgayNghi->total() }}</b>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    {!! $listNgayNghi->appends(['ten_ngay_nghi' => Request::get('ten_ngay_nghi')])->render() !!}
+                                    {!! $listNgayNghi->appends(['ten' => Request::get('ten')])->render() !!}
                                 </div>
                             </div>
                         </div>
