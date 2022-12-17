@@ -2,12 +2,14 @@
 
 namespace Modules\DangKy\Http\Controllers;
 
+use App\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\DangKy;
 use Modules\Admin\Entities\DoanhNghiep;
 use auth,DB;
+use Modules\Admin\Entities\Khoa;
 
 class DangKyController extends Controller
 {
@@ -17,7 +19,8 @@ class DangKyController extends Controller
      */
     public function index()
     {
-        return view('dangky::index');
+        $khoa = Khoa::all();
+        return view('dangky::index',compact('khoa'));
     }
 
 
@@ -46,7 +49,9 @@ class DangKyController extends Controller
                 }
             })
             ->paginate(PER_PAGE);
-        return view('dangky::nhaTruong',compact('danh_sach','doanhNghiep'));
+
+        $giangVien = User::role([GIANG_VIEN])->get();
+        return view('dangky::nhaTruong',compact('danh_sach','doanhNghiep','giangVien'));
     }
     public function sinhVien(Request $request)
     {

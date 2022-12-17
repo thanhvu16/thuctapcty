@@ -89,7 +89,7 @@
                                     <td class="text-left" style="vertical-align: middle">{{$data->ma_sinh_vien}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{formatDMY($data->ngay_sinh)}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{$data->lop}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->khoa}}</td>
+                                    <td class="text-left" style="vertical-align: middle">{{$data->khoaSV->ten_khoa ?? ''}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->dia_chi}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{$data->so_dien_thoai}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->y_kien}}</td>

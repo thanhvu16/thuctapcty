@@ -181,8 +181,16 @@
                                     <div class="col-lg-4 col-md-4 col-xs-4 col-maggin-bot">
                                         <label class="form-label">Khoa <span style="color: red">(*)</span> :</label>
                                     </div>
-                                    <div class="col-lg-8 col-md-8 col-xs-8 col-maggin-bot">
-                                        <input name="khoa" type="text" id="noi_gui" placeholder="Khoa" class="form-control" required>
+                                    <div class="col-lg-8 col-md-8 col-xs-8 col-maggin-bot" >
+                                        <select name="khoa" class="form-control select2" required>
+                                            <option value="">--Chọn khoa--</option>
+                                            @foreach ($khoa as $khoaid)
+                                                <option value="{{ $khoaid->id }}">{{ $khoaid->ten_khoa}}</option>
+                                            @endforeach
+
+                                        </select>
+
+{{--                                        <input name="khoa" type="text" id="noi_gui" placeholder="Khoa" class="form-control" required>--}}
                                     </div>
 
                                 </div>

@@ -56,7 +56,7 @@ class AdminController extends Controller
         $danhSachBaiVietBiTraLai = 0;
         $danhSachBaiVietPhongVien = 0;
         $user = auth::user();
-        if ($user->hasRole(QUAN_TRI_HT)) {
+        if ($user->hasRole(QUAN_TRI_HT)||$user->hasRole(GIAO_VU_KHOA)) {
             return redirect()->route('nguoi-dung.index');
         }
         if ($user->hasRole(NHA_TRUONG)) {

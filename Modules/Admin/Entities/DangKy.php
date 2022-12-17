@@ -27,6 +27,10 @@ class   DangKy extends Model
     {
         return $this->belongsTo(User::class, 'pho_phong_id', 'id');
     }
+    public function khoaSV()
+    {
+        return $this->belongsTo(Khoa::class, 'khoa', 'id');
+    }
 
 
 

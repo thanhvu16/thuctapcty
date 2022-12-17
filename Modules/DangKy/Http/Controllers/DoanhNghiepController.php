@@ -88,12 +88,14 @@ class DoanhNghiepController extends Controller
     {
         $data = $request->all();
         $danhSach = $data['duyet'] ?? null;
+        $giangVien = $request->giang_vien;
         if (!empty($danhSach)) {
             foreach ($danhSach as $dataf) {
 
                 $canBo = DangKy::where('id', $dataf)->first();
                 $canBo->trang_thai = DangKy::CAN_BO_TRUONG_DUYET;
                 $canBo->doanh_nghiep = $request->doanh_nghiep;
+                $canBo->giang_vien = $giangVien[$dataf];
                 $canBo->save();
             }
             return redirect()->back()->with('success', 'Gửi doanh nghiệp thành công !');
@@ -121,6 +123,8 @@ class DoanhNghiepController extends Controller
                 $user->role_id = 13;
                 $user->doanh_nghiep = $Sv->doanh_nghiep;
                 $user->birthday = $Sv->ngay_sinh;
+                $user->giang_vien = $Sv->giang_vien;
+                $user->khoa_id = $Sv->khoa;
                 $user->email = $Sv->email;
                 $user->dang_ky = $Sv->id;
                 $user->status = 1;
