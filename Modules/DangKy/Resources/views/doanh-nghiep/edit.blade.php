@@ -22,6 +22,18 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Khoa liên kết</label>
+                                    <select class="form-control select2" name="khoa"  required>
+                                        <option value="">--Chọn Khoa liên kết-</option>
+                                        @foreach( $khoa  as $dsDV)
+                                            <option value="{{$dsDV->id}}" >{{$dsDV->ten_khoa}}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Địa chỉ <span style="color: red">(*)</span></label>
                                     <input type="text" class="form-control" name="dia_chi" id="exampleInputEmail1"
                                            placeholder="Địa chỉ" value="{{$data->dia_chi}}" required>
@@ -36,7 +48,7 @@
                             </div>
 
 
-                            <div class="col-md-3 text-left" style="margin-top: 20px">
+                            <div class="col-md-3 text-left" >
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>

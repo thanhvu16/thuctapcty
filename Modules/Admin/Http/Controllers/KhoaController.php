@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -33,7 +34,11 @@ class KhoaController extends \Illuminate\Routing\Controller
                 }
             })->paginate(PER_PAGE);
 
-        return view('admin::khoa.index', compact('listNgayNghi', 'ngayNghi'));
+        $giaoVu = User::role([GIAO_VU_KHOA])->get();
+
+
+
+        return view('admin::khoa.index', compact('listNgayNghi', 'ngayNghi','giaoVu'));
     }
 
     /**
@@ -54,6 +59,7 @@ class KhoaController extends \Illuminate\Routing\Controller
     {
         $ngayNghi = new Khoa();
         $ngayNghi->ten_khoa = $request->ten;
+        $ngayNghi->giao_vu = $request->giao_vu;
         $ngayNghi->save();
 
         return redirect()->back()->with('success', 'Thêm mới thành công.');
@@ -89,6 +95,7 @@ class KhoaController extends \Illuminate\Routing\Controller
     {
         $ngayNghi = Khoa::findOrFail($id);
         $ngayNghi->ten_khoa = $request->ten;
+        $ngayNghi->giao_vu = $request->giao_vu;
         $ngayNghi->save();
 
         return redirect()->route('khoa.index')->with('success', 'Cập nhật thành công.');

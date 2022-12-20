@@ -19,6 +19,10 @@ class   DoanhNghiep extends Model
     {
         return $this->belongsTo(HeSoTheLoai::class, 'the_loai_con', 'id');
     }
+    public function khoaLK()
+    {
+        return $this->belongsTo(Khoa::class, 'khoa', 'id');
+    }
     public function phoPhong()
     {
         return $this->belongsTo(User::class, 'pho_phong_id', 'id');

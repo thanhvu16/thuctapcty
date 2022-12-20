@@ -19,6 +19,7 @@
                     </div>
                     @endrole
 
+
                     <!-- /.box-header -->
                     <div class="col-md-12">
                         <div class="row">
@@ -58,17 +59,18 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                             <tr>
-                                <th width="2%" class="text-center">STT</th>
-                                <th width="20%" class="text-center">Tên khoa</th>
-                                <th width="3%" class="text-center">Tác Vụ</th>
+                                <th width="5%" class="text-center">STT</th>
+                                <th width="" class="text-center">Tên khoa</th>
+                                <th width="20%" class="text-center">Giáo vụ khoa</th>
+                                <th width="6%" class="text-center">Tác Vụ</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($listNgayNghi as $key => $ngayNghi)
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle">{{ $key+1 }}</td>
-                                    <td class="text-left"
-                                        style="vertical-align: middle">{{ $ngayNghi->ten_khoa }}</td>
+                                    <td class="text-left" style="vertical-align: middle">{{ $ngayNghi->ten_khoa }}</td>
+                                    <td class="text-left" style="vertical-align: middle">{{ $ngayNghi->giaoVuKhoa->fullname ?? '' }}</td>
                                     <td class="text-center">
                                         @role(NHA_TRUONG)
                                         <a class="btn-action btn btn-color-blue btn-icon btn-light btn-sm"

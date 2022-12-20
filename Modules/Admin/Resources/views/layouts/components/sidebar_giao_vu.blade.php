@@ -36,6 +36,7 @@
         <li class="{{ Route::is('taoDoanhNghiep') ? 'active' : '' }}"><a href="{{ route('taoDoanhNghiep') }}"><i class="fa fa-circle-o"></i> Tạo nhân viên</a></li>
     </ul>
 </li>
+
 {{--<li class="{{  Route::is('doanh-nghiep.index') ? 'active' : '' }} ">--}}
 {{--    <a href="{{route('doanh-nghiep.index')}}">--}}
 {{--        <i class="fa fa-user-plus" ></i> <span>Doanh nghiệp</span>--}}

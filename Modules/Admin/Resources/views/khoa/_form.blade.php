@@ -10,6 +10,16 @@
                 <input type="text" class="form-control" name="ten" value="{{ isset($ngayNghi) ? $ngayNghi->ten_khoa : null }}"
                        placeholder="Nhập tên" required>
         </div>
+        <div class="col-md-3">
+                <label>Giáo vụ khoa</label>
+            <select class="form-control select2" name="giao_vu"  required>
+                <option value="">--Chọn Giáo vụ khoa-</option>
+                @foreach($giaoVu as $dsDV)
+                    <option value="{{$dsDV->id}}" >{{$dsDV->fullname}}</option>
+                @endforeach
+
+            </select>
+        </div>
 
         <div class="col-md-3 text-left" style="margin-top: 20px">
             <div class="form-group">

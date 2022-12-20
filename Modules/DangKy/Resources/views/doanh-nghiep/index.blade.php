@@ -36,6 +36,18 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
+                                                    <label for="exampleInputEmail1">Khoa liên kết</label>
+                                                    <select class="form-control select2" name="khoa"  required>
+                                                        <option value="">--Chọn Khoa liên kết-</option>
+                                                        @foreach( $khoa  as $dsDV)
+                                                            <option value="{{$dsDV->id}}" >{{$dsDV->ten_khoa}}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
                                                     <label for="exampleInputEmail1">Địa chỉ</label>
                                                     <input type="text" class="form-control" name="dia_chi" id="exampleInputEmail1"
                                                            placeholder="Địa chỉ" required>
@@ -86,6 +98,7 @@
                             <tr>
                                 <th width="5%" class="text-center">STT</th>
                                 <th width="" class="text-center">Tên doanh nghiệp</th>
+                                <th width="15%" class="text-center">khoa liên kết</th>
                                 <th width="15%" class="text-center">Địa chỉ </th>
                                 <th width="20%" class="text-center">Số điện thoại</th>
                                 <th width="10%" class="text-center">Tác Vụ</th>
@@ -96,6 +109,7 @@
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->ten_doanh_nghiep}}</td>
+                                    <td class="text-left" style="vertical-align: middle">{{$data->khoaLK->ten_khoa ?? ''}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->dia_chi ?? ''}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{$data->so_dien_thoai}}</td>
                                     <td class="text-center">

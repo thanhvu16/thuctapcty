@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\DangKy;
 use Modules\Admin\Entities\DoanhNghiep;
 use DB,Hash,Mail;
+use Modules\Admin\Entities\Khoa;
 use Spatie\Permission\Models\Role;
 
 class DoanhNghiepController extends Controller
@@ -27,7 +28,8 @@ class DoanhNghiepController extends Controller
                 }
             })
             ->paginate(PER_PAGE);
-        return view('dangky::doanh-nghiep.index', compact('danh_sach'));
+        $khoa = Khoa::all();
+        return view('dangky::doanh-nghiep.index', compact('danh_sach','khoa'));
     }
 
     /**
@@ -36,6 +38,7 @@ class DoanhNghiepController extends Controller
      */
     public function create()
     {
+
         return view('dangky::create');
     }
 
@@ -50,6 +53,7 @@ class DoanhNghiepController extends Controller
         $data->ten_doanh_nghiep = $request->ten_doanh_nghiep;
         $data->dia_chi = $request->dia_chi;
         $data->so_dien_thoai = $request->so_dien_thoai;
+        $data->khoa = $request->khoa;
         $data->save();
         return redirect()->back()->with('success', 'Thêm mới doanh nghiệp thành công !');
 
@@ -73,7 +77,8 @@ class DoanhNghiepController extends Controller
     public function edit($id)
     {
         $data = DoanhNghiep::where('id', $id)->first();
-        return view('dangky::doanh-nghiep.edit', compact('data'));
+        $khoa = Khoa::all();
+        return view('dangky::doanh-nghiep.edit', compact('data','khoa'));
     }
 
     public function xoaSV($id)
@@ -162,6 +167,7 @@ class DoanhNghiepController extends Controller
         $data->ten_doanh_nghiep = $request->ten_doanh_nghiep;
         $data->dia_chi = $request->dia_chi;
         $data->so_dien_thoai = $request->so_dien_thoai;
+        $data->khoa = $request->khoa;
         $data->save();
         return redirect()->route('doanh-nghiep.index')->with('success', 'Cập nhật thành công !');
     }
