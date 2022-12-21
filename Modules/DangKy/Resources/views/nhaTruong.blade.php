@@ -82,7 +82,6 @@
                                 <th width="10%" class="text-center">Địa chỉ liên hệ</th>
                                 <th width="7%" class="text-center">Số điện thoại</th>
                                 <th width="10%" class="text-center">Ý kiến </th>
-                                <th width="13%" class="text-center">Giảng viên phụ trách</th>
                                 <th width="5%" class="text-center">Tác vụ</th>
                             </tr>
                             </thead>
@@ -100,15 +99,6 @@
                                     <td class="text-left" style="vertical-align: middle">{{$data->dia_chi}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{$data->so_dien_thoai}}</td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->y_kien}}</td>
-                                    <td class="text-left" style="vertical-align: middle">
-                                        <select name="giang_vien[{{$data->id}}]" form="dangky" class="form-control select2" required>
-                                            <option value="">--Chọn giảng viên--</option>
-                                            @foreach ($giangVien as $khoaid)
-                                                <option value="{{ $khoaid->id }}">{{ $khoaid->fullname}}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </td>
                                     <td class="text-center">
                                         <form method="POST" action="{{route('xoaSV',$data->id)}}">
                                             @csrf

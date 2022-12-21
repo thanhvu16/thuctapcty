@@ -39,7 +39,7 @@
                                 <th width="11%" class="text-center">Hạn xử lý</th>
                                 <th width="" class="text-center">Nội dung công việc</th>
                                 <th width="20%" class="text-center">Công việc chi tiết</th>
-                                <th width="11%" class="text-center">Người giao </th>
+                                <th width="11%" class="text-center">Sinh viên thực hiện </th>
                                 <th width="11%" class="text-center">Ngày giao </th>
                                 <th width="10%" class="text-center">Trạng thái</th>
                                 <th width="10%" class="text-center">Tác vụ</th>
@@ -53,19 +53,21 @@
                                     <td class="text-left" ><a href="">{{$data->noi_dung}}</a></td>
                                     <td class="text-left" >
                                         @if(count($data->CTcongViec) > 0)
-                                        @foreach($data->CTcongViec as $cv)
+                                            @foreach($data->CTcongViec as $cv)
                                                 <a  onclick="layDULieu({{$cv->id}})">- {{$cv->noi_dung}}(<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) </a>    <br> <br>
-                                        @endforeach
+                                            @endforeach
                                         @endif
                                     </td>
                                     <td class="text-left" >{{$data->SinhVien->fullname ?? ''}}</td>
                                     <td class="text-center" >{{formatDMY($data->created_at)}}</td>
                                     <td class="text-center">
                                         @if($data->trang_thai == 1)
-                                        <span class="label label-pill label-sm label-success">Mới nhận</span>
+                                            <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
                                             <span class="label label-pill label-sm label-success">Đang thực hiện</span>
                                         @elseif($data->trang_thai == 3)
+                                            <span class="label label-pill label-sm label-success">Chờ duyệt</span>
+                                        @elseif($data->trang_thai == 4)
                                             <span class="label label-pill label-sm label-success">Đã hoàn thành</span>
                                         @endif
 {{--                                        <form method="POST" action="{{route('xoaDN',$data->id)}}">--}}
@@ -146,7 +148,9 @@
 {{--                        </div>--}}
                     </div>
                     <!-- /.box-body -->
+                    <div id="moda-search" class="modal fade" role="dialog">
 
+                    </div>
                 </div>
             </div>
         </div>

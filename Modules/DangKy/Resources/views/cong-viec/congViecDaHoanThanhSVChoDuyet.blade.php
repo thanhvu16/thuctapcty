@@ -8,14 +8,14 @@
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title" style="font-size: 16px !important;">Công việc giao đã hoàn thành </h3>
+                        <h3 class="box-title" style="font-size: 16px !important;">Công việc đã nhận đang thực hiện</h3>
                     </div>
 
 
                     <!-- /.box-header -->
                     <div class="col-md-12" style="margin-top: 20px">
                         <div class="row">
-                            <form action="{{route('congViecDaHoanThanh')}}" method="get">
+                            <form action="{{route('congViecDaHoanThanhSVChoDuyet')}}" method="get">
 
                                 <div class="col-md-3 form-group">
                                     <label for="exampleInputEmail1">Tìm theo nội dung công việc</label>
@@ -40,27 +40,26 @@
                                 <th width="" class="text-center">Nội dung công việc</th>
                                 <th width="20%" class="text-center">Công việc chi tiết</th>
                                 <th width="11%" class="text-center">Sinh viên thực hiện </th>
-                                <th width="8%" class="text-center">Ngày giao </th>
+                                <th width="11%" class="text-center">Ngày giao </th>
                                 <th width="10%" class="text-center">Trạng thái</th>
-                                <th width="10%" class="text-center">Điểm đánh giá</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($CongViec as $key=>$data)
                                 <tr>
-                                    <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
-                                    <td class="text-center" style="vertical-align: middle;color: red">{{formatDMY($data->han_xu_ly)}}</td>
-                                    <td class="text-left" style="vertical-align: middle"><a href="">{{$data->noi_dung}}</a></td>
-                                    <td class="text-left" style="vertical-align: middle">
+                                    <td class="text-center" >{{$key+1}}</td>
+                                    <td class="text-center" >{{formatDMY($data->han_xu_ly)}}</td>
+                                    <td class="text-left" ><a href="">{{$data->noi_dung}}</a></td>
+                                    <td class="text-left" >
                                         @if(count($data->CTcongViec) > 0)
                                             @foreach($data->CTcongViec as $cv)
                                                 <a  onclick="layDULieu({{$cv->id}})">- {{$cv->noi_dung}}(<i style="color: red">Hạn xử lý: {{formatDMY($cv->han_xu_ly)}}</i>) </a>    <br> <br>
                                             @endforeach
                                         @endif
                                     </td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->SinhVien->fullname ?? ''}}</td>
-                                    <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
-                                    <td class="text-center" style="vertical-align: middle">
+                                    <td class="text-left" >{{$data->SinhVien->fullname ?? ''}}</td>
+                                    <td class="text-center" >{{formatDMY($data->created_at)}}</td>
+                                    <td class="text-center">
                                         @if($data->trang_thai == 1)
                                             <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
@@ -83,10 +82,11 @@
 {{--                                        </form>--}}
 
                                     </td>
-                                    <td class="text-center" style="vertical-align: middle;font-size: 18px !important;font-weight: bold;color: red">{{$data->danh_gia_cb}}</td>
+
+
                                 </tr>
                             @empty
-                                <td class="text-center" colspan="7" style="vertical-align: middle">Không có công việc nào được giao !
+                                <td class="text-center" colspan="8" style="vertical-align: middle">Không có công việc nào đang xử lý !
                                 </td>
                             @endforelse
 
@@ -103,6 +103,44 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="moda-search" class="modal fade" role="dialog">
+
+                        </div>
+{{--                        <div class="modal fade" id="myModal">--}}
+{{--                            <div class="modal-dialog">--}}
+{{--                                <div class="modal-content">--}}
+{{--                                    <form action="" method="POST" enctype="multipart/form-data">--}}
+{{--                                        @csrf--}}
+{{--                                        <div class="modal-header">--}}
+{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>--}}
+{{--                                            </button>--}}
+{{--                                            <h4 class="modal-title"><i--}}
+{{--                                                    class="fa fa-folder-open-o"></i> Tải nhiều tệp tin</h4>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-body">--}}
+{{--                                            <div class="row">--}}
+{{--                                                <div class="form-group col-md-12">--}}
+{{--                                                    <label for="sokyhieu" class="">Chọn tệp--}}
+{{--                                                        tin<br><small><i>(Đặt tên file theo định dạng: số đến (vd:--}}
+{{--                                                                1672.pdf))</i></small>--}}
+{{--                                                    </label>--}}
+
+{{--                                                    <input type="file" multiple name="ten_file[]"--}}
+{{--                                                           accept=".xlsx,.xls,.doc,.docx,.txt,.pdf"/>--}}
+{{--                                                    <input type="text" id="url-file" value="123"--}}
+{{--                                                           class="hidden" name="txt_file[]">--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-group col-md-4" >--}}
+{{--                                                    <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i> Tải lên</button>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-footer">--}}
+{{--                                        </div>--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <!-- /.box-body -->
                     <div id="moda-search" class="modal fade" role="dialog">
@@ -114,6 +152,7 @@
     </section>
 
 @endsection
+
 @section('script')
     <script type="text/javascript">
 

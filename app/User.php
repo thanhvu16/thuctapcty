@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\Admin\Entities\BaiViet;
+use Modules\Admin\Entities\Khoa;
 use Modules\Admin\Entities\NguonTin;
 use Modules\Admin\Entities\DonVi;
 use Modules\Admin\Entities\ToChuc;
@@ -81,6 +82,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(ToChuc::class, 'don_vi_id', 'id')
             ->select('id', 'ten_don_vi', 'ten_viet_tat', 'dieu_hanh', 'nhom_don_vi', 'cap_xa', 'ma_hanh_chinh', 'parent_id');
+    }
+    public function Khoa()
+    {
+        return $this->belongsTo(Khoa::class, 'khoa_id', 'id');
     }
     public function SoBaiViet($id)
     {

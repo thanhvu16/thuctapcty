@@ -42,8 +42,23 @@ class GiaoViecController extends Controller
                     return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
                 }
             })
+            ->where('trang_thai','<', 3)
             ->paginate(PER_PAGE);
         return view('dangky::cong-viec.CongViecDaGiao', compact('CongViec'));
+    }
+    public function congViecDaHoanThanhChoDuyet(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $CongViec = CongViec::whereNull('deleted_at')
+            ->where('nguoi_giao', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->where('trang_thai', 3)
+            ->paginate(PER_PAGE);
+        return view('dangky::cong-viec.CongViecHTChoDuyet', compact('CongViec'));
     }
 
     public function congViecDaHoanThanh(Request $request)
@@ -55,7 +70,7 @@ class GiaoViecController extends Controller
                 if (!empty($ten)) {
                     return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
                 }
-            })->where('trang_thai', 3)
+            })->where('trang_thai', 4)
             ->paginate(PER_PAGE);
         return view('dangky::cong-viec.CongViecHT', compact('CongViec'));
     }
@@ -72,7 +87,21 @@ class GiaoViecController extends Controller
             ->paginate(PER_PAGE);
         return view('dangky::cong-viec.CongViecDaNhan', compact('CongViec'));
     }
-    public function congViecDaNhanHT(Request $request)
+    public function danhGiaCuoiKy(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $danh_sach = User::role([SINH_VIEN])
+            ->whereNull('deleted_at')
+            ->where('doanh_nghiep', auth::user()->doanh_nghiep)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(fullname)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->paginate(PER_PAGE);
+        return view('dangky::danh-gia-cuoi-ky', compact('danh_sach'));
+    }
+    public function congViecDaHoanThanhSVChoDuyet(Request $request)
     {
         $ten = $request->get('noi_dung');
         $CongViec = CongViec::whereNull('deleted_at')
@@ -83,7 +112,29 @@ class GiaoViecController extends Controller
                 }
             })->where('trang_thai', 3)
             ->paginate(PER_PAGE);
+        return view('dangky::cong-viec.congViecDaHoanThanhSVChoDuyet', compact('CongViec'));
+    }
+    public function congViecDaNhanHT(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $CongViec = CongViec::whereNull('deleted_at')
+            ->where('sinh_vien_id', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(noi_dung)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })->where('trang_thai', 4)
+            ->paginate(PER_PAGE);
         return view('dangky::cong-viec.CongViecDaNhanHT', compact('CongViec'));
+    }
+    public function capNhatHT(Request $request,$id)
+    {
+        $CongViec = CongViec::find($id);
+        $CongViec->danh_gia_cb = $request->diem;
+        $CongViec->trang_thai = 4;
+        $CongViec->save();
+
+        return redirect()->back()->with('success', 'Cập nhật công việc thành công !');
     }
     public function capNhatCV(Request $request,$id)
     {

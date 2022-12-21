@@ -10,6 +10,7 @@
     <ul class="treeview-menu">
         <li class="{{ Route::is('cong-viec.index') ? 'active' : '' }}"><a href="{{route('cong-viec.index')}}"><i class="fa fa-circle-o"></i> Công việc mới</a></li>
         <li class="{{ Route::is('congViecDaNhan') ? 'active' : '' }}"><a href="{{route('congViecDaNhan')}}"><i class="fa fa-circle-o"></i>Công việc đã nhận  </a></li>
+        <li class="{{ Route::is('congViecDaHoanThanhSVChoDuyet') ? 'active' : '' }}"><a href="{{route('congViecDaHoanThanhSVChoDuyet')}}"><i class="fa fa-circle-o"></i>Công việc HT chờ duyệt</a></li>
         <li class="{{ Route::is('congViecDaNhanHT') ? 'active' : '' }}"><a href="{{route('congViecDaNhanHT')}}"><i class="fa fa-circle-o"></i>Công việc đã hoàn thành</a></li>
     </ul>
 </li>

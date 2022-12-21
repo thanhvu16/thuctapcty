@@ -63,7 +63,7 @@ class AdminController extends Controller
             return redirect()->route('DSGiaoVuAdmin');
         }
         if ($user->hasRole(DOANH_NGHIEP)) {
-            return redirect()->route('quanly');
+            return redirect()->route('congViecDaGiao');
         }
         if ($user->hasRole(SINH_VIEN)) {
             return redirect()->route('cong-viec.index');

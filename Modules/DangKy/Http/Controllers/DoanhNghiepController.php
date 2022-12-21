@@ -94,16 +94,46 @@ class DoanhNghiepController extends Controller
         $data = $request->all();
         $danhSach = $data['duyet'] ?? null;
         $giangVien = $request->giang_vien;
+        $mang = [];
         if (!empty($danhSach)) {
             foreach ($danhSach as $dataf) {
 
-                $canBo = DangKy::where('id', $dataf)->first();
-                $canBo->trang_thai = DangKy::CAN_BO_TRUONG_DUYET;
-                $canBo->doanh_nghiep = $request->doanh_nghiep;
-                $canBo->giang_vien = $giangVien[$dataf];
-                $canBo->save();
+                $Sv = DangKy::where('id', $dataf)->first();
+                $Sv->trang_thai = DangKy::CAN_BO_TRUONG_DUYET;
+                $Sv->doanh_nghiep = $request->doanh_nghiep;
+                $Sv->save();
+
+                $khoa = Khoa::where('id',$Sv->khoa)->first();
+
+                $user = new User();
+                $user->ma_sv = $Sv->ma_sinh_vien;
+                $user->username = $Sv->ma_sinh_vien;
+                $user->password = Hash::make($Sv->ma_sinh_vien);
+                $user->fullname = $Sv->ten_sinh_vien;
+                $user->role_id = 13;
+                $user->doanh_nghiep = $Sv->doanh_nghiep;
+                $user->birthday = $Sv->ngay_sinh;
+                $user->giang_vien = $khoa->giang_vien_hd;
+                $user->khoa_id = $Sv->khoa;
+                $user->email = $Sv->email;
+                $user->dang_ky = $Sv->id;
+                $user->status = 1;
+                $user->save();
+                array_push($mang,$Sv);
+                $role = Role::findById(13);
+                $user->assignRole($role->name);
+                $permissions = $role->permissions->pluck('name')->toArray();
+                $user->syncPermissions($permissions);
+
+                $email = $Sv->email;
+                $data1['info'] = $mang;
+                Mail::Send('guiMail.guiMail', $data1, function ($message) use ($email) {
+                    $message->from('haithanhcx1@gmail.com', 'ThucTap');
+                    $message->to($email, $email);
+                    $message->subject('Thông tin tài khoản sinh viên');
+                });
             }
-            return redirect()->back()->with('success', 'Gửi doanh nghiệp thành công !');
+            return redirect()->back()->with('success', 'Duyệt thành công !');
         } else {
             return redirect()->back()->with('error', 'Bạn chưa chọn sinh viên nào !');
         }

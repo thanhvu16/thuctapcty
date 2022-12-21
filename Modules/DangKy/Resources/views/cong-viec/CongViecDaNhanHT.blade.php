@@ -39,9 +39,10 @@
                                 <th width="11%" class="text-center">Hạn xử lý</th>
                                 <th width="" class="text-center">Nội dung công việc</th>
                                 <th width="20%" class="text-center">Công việc chi tiết</th>
-                                <th width="11%" class="text-center">Người giao </th>
+                                <th width="11%" class="text-center">Sinh viên thực hiện </th>
                                 <th width="11%" class="text-center">Ngày giao </th>
                                 <th width="10%" class="text-center">Trạng thái</th>
+                                <th width="10%" class="text-center">Điểm đánh giá</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -59,12 +60,14 @@
                                     </td>
                                     <td class="text-left" style="vertical-align: middle">{{$data->SinhVien->fullname ?? ''}}</td>
                                     <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
-                                    <td class="text-center">
+                                    <td class="text-center" style="vertical-align: middle">
                                         @if($data->trang_thai == 1)
-                                        <span class="label label-pill label-sm label-success">Mới nhận</span>
+                                            <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
                                             <span class="label label-pill label-sm label-success">Đang thực hiện</span>
                                         @elseif($data->trang_thai == 3)
+                                            <span class="label label-pill label-sm label-success">Chờ duyệt</span>
+                                        @elseif($data->trang_thai == 4)
                                             <span class="label label-pill label-sm label-success">Đã hoàn thành</span>
                                         @endif
 {{--                                        <form method="POST" action="{{route('xoaDN',$data->id)}}">--}}
@@ -80,6 +83,8 @@
 {{--                                        </form>--}}
 
                                     </td>
+                                    <td class="text-center" style="vertical-align: middle;font-size: 18px !important;font-weight: bold;color: red">{{$data->danh_gia_cb}}</td>
+
 
                                 </tr>
                             @empty

@@ -39,14 +39,17 @@
                                 <th width="11%" class="text-center">Hạn xử lý</th>
                                 <th width="" class="text-center">Nội dung công việc</th>
                                 <th width="20%" class="text-center">Công việc chi tiết</th>
-                                <th width="11%" class="text-center">Sinh viên thực hiện </th>
-                                <th width="8%" class="text-center">Ngày giao </th>
+                                <th width="11%" class="text-center">Người giao </th>
+                                <th width="8%" class="text-center">Sinh viên thực hiện </th>
                                 <th width="10%" class="text-center">Trạng thái</th>
-                                <th width="10%" class="text-center">Điểm đánh giá</th>
+                                <th width="10%" class="text-center">Đánh giá điểm</th>
+                                <th width="5%" class="text-center">Tác vụ</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($CongViec as $key=>$data)
+                                <form action="{{route('capNhatHT',$data->id)}}" id="danh-gia-{{$data->id}}" method="post">
+                                    @csrf
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
                                     <td class="text-center" style="vertical-align: middle;color: red">{{formatDMY($data->han_xu_ly)}}</td>
@@ -62,7 +65,7 @@
                                     <td class="text-center" style="vertical-align: middle">{{formatDMY($data->created_at)}}</td>
                                     <td class="text-center" style="vertical-align: middle">
                                         @if($data->trang_thai == 1)
-                                            <span class="label label-pill label-sm label-success">Mới nhận</span>
+                                        <span class="label label-pill label-sm label-success">Mới nhận</span>
                                         @elseif($data->trang_thai == 2)
                                             <span class="label label-pill label-sm label-success">Đang thực hiện</span>
                                         @elseif($data->trang_thai == 3)
@@ -70,23 +73,18 @@
                                         @elseif($data->trang_thai == 4)
                                             <span class="label label-pill label-sm label-success">Đã hoàn thành</span>
                                         @endif
-{{--                                        <form method="POST" action="{{route('xoaDN',$data->id)}}">--}}
-{{--                                            @csrf--}}
-{{--                                            <a class="btn-action btn btn-color-blue btn-icon btn-light btn-sm"--}}
-{{--                                               href="{{route('doanh-nghiep.edit',$data->id)}}" role="button" title="Sửa">--}}
-{{--                                                <i class="fa fa-edit"></i>--}}
-{{--                                            </a>--}}
-{{--                                            <button class="btn btn-action btn-color-red btn-icon btn-ligh btn-sm btn-remove-item" role="button"--}}
-{{--                                                    title="Xóa">--}}
-{{--                                                <i class="fa fa-trash" aria-hidden="true" style="color: red"></i>--}}
-{{--                                            </button>--}}
-{{--                                        </form>--}}
-
                                     </td>
-                                    <td class="text-center" style="vertical-align: middle;font-size: 18px !important;font-weight: bold;color: red">{{$data->danh_gia_cb}}</td>
+                                    <td style="vertical-align: middle">
+                                        <input type="text" name="diem" form="danh-gia-{{$data->id}}" class="form-control" required>
+                                    </td>
+                                    <td style="vertical-align: middle" class="text-center">
+                                        <button form="danh-gia-{{$data->id}}" style="color: white !important;"  class="btn btn-primary"><i class="fa fa-check"></i> Duyệt</button>
+                                    </td>
+
                                 </tr>
+                                </form>
                             @empty
-                                <td class="text-center" colspan="7" style="vertical-align: middle">Không có công việc nào được giao !
+                                <td class="text-center" colspan="9" style="vertical-align: middle">Không có công việc nào được giao !
                                 </td>
                             @endforelse
 
