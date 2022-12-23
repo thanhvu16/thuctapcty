@@ -74,6 +74,9 @@ class AdminController extends Controller
         if ($user->hasRole(GIAO_VU_KHOA)) {
             return redirect()->route('DSGiaoVienHD');
         }
+        if ($user->hasRole(GIANG_VIEN)) {
+            return redirect()->route('nhapDiemCuoiKy');
+        }
 
         dd(auth::user());
 

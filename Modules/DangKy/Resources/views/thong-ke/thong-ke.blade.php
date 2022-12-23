@@ -8,20 +8,24 @@
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title" style="font-size: 16px !important;">Danh sách sinh viên chờ đánh giá </h3>
+                        <h3 class="box-title" style="font-size: 16px !important;">Thống kê sinh viên theo xếp loại </h3>
                     </div>
 
 
                     <!-- /.box-header -->
                     <div class="col-md-12" style="margin-top: 20px">
                         <div class="row">
-                            <form action="{{route('danhGiaCuoiKy')}}" method="get">
+                            <form action="{{route('thongKeXepLoai')}}" method="get">
+
 
                                 <div class="col-md-3 form-group">
-                                    <label for="exampleInputEmail1">Tìm theo họ tên</label>
-                                    <input type="text" class="form-control" value="{{Request::get('noi_dung')}}"
-                                           name="noi_dung"
-                                           placeholder="họ tên..">
+                                    <label for="exampleInputEmail1">Thống kê theo xếp loại</label>
+                                    <select class="form-control " name="danh_gia_doanh_nghiep" id="">
+                                        <option value="">Lựa chọn</option>
+                                        <option value="1" {{Request::get('danh_gia_doanh_nghiep') == 1 ? 'selected' : ''}} >Hoàn thành xuất sắc</option>
+                                        <option value="2" {{Request::get('danh_gia_doanh_nghiep') == 2 ? 'selected' : ''}}>Hoàn thành</option>
+                                        <option value="3" {{Request::get('danh_gia_doanh_nghiep') == 3 ? 'selected' : ''}}>Không hoàn thành</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-3" style="margin-top: 20px">
                                     <button type="submit" name="search" class="btn btn-primary"><i class="fa fa-search"></i> Tìm Kiếm</button>
@@ -42,44 +46,31 @@
                                 <th width="8%" class="text-center">Mã sinh viên</th>
                                 <th width="8%" class="text-center">Ngày sinh</th>
                                 <th width="10%" class="text-center">Khoa</th>
-                                <th width="10%" class="text-center">Ý kiến </th>
-                                <th width="10%" class="text-center">Đánh giá </th>
-                                <th width="10%" class="text-center">Điểm </th>
-                                <th width="5%" class="text-center">Tác vụ</th>
+                                <th width="10%" class="text-center">Ý kiến giảng viên </th>
+                                <th width="10%" class="text-center">Điểm trường </th>
+                                <th width="10%" class="text-center">Ý kiến doanh nghiệp </th>
+                                <th width="10%" class="text-center">Điểm doanh nghiệp </th>
+                                <th width="10%" class="text-center">Điểm trung bình </th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($danh_sach as $key=>$data)
-                                <form action="{{route('postDanhGiaCuoiKy',$data->id)}}" method="post">
+                                <form action="{{route('postNhapDiemCuoiKy',$data->id)}}" method="post">
                                     @csrf
                                     <tr>
-                                    <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->fullname}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->ma_sv}}</td>
-                                    <td class="text-center" style="vertical-align: middle">{{formatDMY($data->birthday)}}</td>
-                                    <td class="text-left" style="vertical-align: middle">{{$data->Khoa->ten_khoa ?? ''}}</td>
-                                    <td class="text-left" style="vertical-align: middle">
-                                        <textarea cols="4" class="form-control" name="y_kien_doanh_nghiep"></textarea>
-                                    </td>
-                                    <td class="text-left" style="vertical-align: middle">
-                                        <select class="form-control " name="danh_gia_doanh_nghiep" id="">
-                                            <option value="">Lựa chọn</option>
-                                            <option value="1">Hoàn thành xuất sắc</option>
-                                            <option value="2">Hoàn thành</option>
-                                            <option value="3">Không hoàn thành</option>
-                                        </select>
-                                    </td>
-                                    <td class="text-left" style="vertical-align: middle">
-                                        <input type="text"  class="form-control" name="diem_doanh_nghiep">
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-primary btn-sm" type="submit">
-                                            <i class="fa fa-check"></i> Hoàn thành
-                                        </button>
+                                        <td class="text-center" style="vertical-align: middle">{{$key+1}}</td>
+                                        <td class="text-left" style="vertical-align: middle">{{$data->fullname}}</td>
+                                        <td class="text-left" style="vertical-align: middle">{{$data->ma_sv}}</td>
+                                        <td class="text-center" style="vertical-align: middle">{{formatDMY($data->birthday)}}</td>
+                                        <td class="text-left" style="vertical-align: middle">{{$data->Khoa->ten_khoa ?? ''}}</td>
+                                        <td class="text-left" style="vertical-align: middle">{{$data->y_kien_giang_vien ?? ''}}</td>
+                                        <td class="text-center" style="vertical-align: middle">{{$data->diem_giang_vien ?? ''}}</td>
+                                        <td class="text-left" style="vertical-align: middle">{{$data->y_kien_doanh_nghiep ?? ''}}</td>
+                                        <td class="text-center" style="vertical-align: middle">{{$data->diem_doanh_nghiep ?? ''}}</td>
+                                        <td class="text-center" style="vertical-align: middle">{{($data->diem_doanh_nghiep + $data->diem_giang_vien)/2}}</td>
 
-                                    </td>
 
-                                </tr>
+                                    </tr>
                                 </form>
                             @empty
                                 <td class="text-center" colspan="11" style="vertical-align: middle">Không có dữ liệu !

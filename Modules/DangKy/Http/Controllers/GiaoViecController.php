@@ -87,11 +87,66 @@ class GiaoViecController extends Controller
             ->paginate(PER_PAGE);
         return view('dangky::cong-viec.CongViecDaNhan', compact('CongViec'));
     }
+    public function nhapDiemCuoiKy(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $danh_sach = User::role([SINH_VIEN])
+            ->whereNull('deleted_at')
+            ->whereNull('diem_giang_vien')
+            ->whereNotNull('diem_doanh_nghiep')
+            ->where('giang_vien', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(fullname)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->paginate(PER_PAGE);
+        return view('dangky::nhap-diem-cuoi-ky', compact('danh_sach'));
+    }
+    public function thongKeXepLoai(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $danh_gia_doanh_nghiep = $request->get('danh_gia_doanh_nghiep');
+        $danh_sach = User::role([SINH_VIEN])
+            ->whereNull('deleted_at')
+            ->whereNotNull('diem_giang_vien')
+            ->whereNotNull('diem_doanh_nghiep')
+            ->where('khoa_id', auth::user()->khoa_id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(fullname)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->where(function ($query) use ($danh_gia_doanh_nghiep) {
+                if (!empty($danh_gia_doanh_nghiep)) {
+                    return $query->where(DB::raw('lower(danh_gia_doanh_nghiep)'), 'LIKE', "%" . mb_strtolower($danh_gia_doanh_nghiep) . "%");
+                }
+            })
+            ->paginate(PER_PAGE);
+        return view('dangky::thong-ke.thong-ke', compact('danh_sach'));
+    }
+    public function danhapDiemCuoiKy(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $danh_sach = User::role([SINH_VIEN])
+            ->whereNull('deleted_at')
+            ->whereNotNull('diem_giang_vien')
+            ->whereNotNull('diem_doanh_nghiep')
+            ->where('giang_vien', auth::user()->id)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(fullname)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->paginate(PER_PAGE);
+        return view('dangky::da-nhap-diem-cuoi-ky', compact('danh_sach'));
+    }
     public function danhGiaCuoiKy(Request $request)
     {
         $ten = $request->get('noi_dung');
         $danh_sach = User::role([SINH_VIEN])
             ->whereNull('deleted_at')
+            ->whereNull('diem_doanh_nghiep')
             ->where('doanh_nghiep', auth::user()->doanh_nghiep)
             ->where(function ($query) use ($ten) {
                 if (!empty($ten)) {
@@ -100,6 +155,21 @@ class GiaoViecController extends Controller
             })
             ->paginate(PER_PAGE);
         return view('dangky::danh-gia-cuoi-ky', compact('danh_sach'));
+    }
+    public function daDanhGiaCuoiKy(Request $request)
+    {
+        $ten = $request->get('noi_dung');
+        $danh_sach = User::role([SINH_VIEN])
+            ->whereNull('deleted_at')
+            ->whereNotNull('diem_doanh_nghiep')
+            ->where('doanh_nghiep', auth::user()->doanh_nghiep)
+            ->where(function ($query) use ($ten) {
+                if (!empty($ten)) {
+                    return $query->where(DB::raw('lower(fullname)'), 'LIKE', "%" . mb_strtolower($ten) . "%");
+                }
+            })
+            ->paginate(PER_PAGE);
+        return view('dangky::da-danh-gia-cuoi-ky', compact('danh_sach'));
     }
     public function congViecDaHoanThanhSVChoDuyet(Request $request)
     {
@@ -151,6 +221,25 @@ class GiaoViecController extends Controller
         $CongViec->save();
 
         return redirect()->back()->with('success', 'Cập nhật công việc thành công !');
+    }
+    public function postDanhGiaCuoiKy(Request $request,$id)
+    {
+        $CongViec = User:: where('id', $id)->first();
+        $CongViec->y_kien_doanh_nghiep = $request->y_kien_doanh_nghiep;
+        $CongViec->diem_doanh_nghiep = $request->diem_doanh_nghiep;
+        $CongViec->danh_gia_doanh_nghiep = $request->danh_gia_doanh_nghiep;
+        $CongViec->save();
+
+        return redirect()->back()->with('success', 'Đánh giá thành công !');
+    }
+    public function postNhapDiemCuoiKy(Request $request,$id)
+    {
+        $CongViec = User:: where('id', $id)->first();
+        $CongViec->y_kien_giang_vien = $request->y_kien_giang_vien;
+        $CongViec->diem_giang_vien = $request->diem_giang_vien;
+        $CongViec->save();
+
+        return redirect()->back()->with('success', 'Đánh giá thành công !');
     }
 
     public function capNhatKetQua(Request $request,$id)

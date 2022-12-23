@@ -30,6 +30,12 @@ Route::get('danh-sach-cong-viec-da-giao', 'GiaoViecController@congViecDaGiao')->
 Route::get('danh-sach-cong-viec-sinh-vien-hoan-thanh-cho-duyet', 'GiaoViecController@congViecDaHoanThanhChoDuyet')->name('congViecDaHoanThanhChoDuyet');
 Route::get('danh-sach-cong-viec-sinh-vien-cho-duyet', 'GiaoViecController@congViecDaHoanThanhSVChoDuyet')->name('congViecDaHoanThanhSVChoDuyet');
 Route::get('danh-gia-cuoi-ky-thuc-tap', 'GiaoViecController@danhGiaCuoiKy')->name('danhGiaCuoiKy');
+Route::get('thong-ke', 'GiaoViecController@thongKeXepLoai')->name('thongKeXepLoai');
+Route::get('danh-sach-da-danh-gia-cuoi-ky-thuc-tap', 'GiaoViecController@daDanhGiaCuoiKy')->name('daDanhGiaCuoiKy');
+Route::get('nhap-diem-sinh-vien-cuoi-ky', 'GiaoViecController@nhapDiemCuoiKy')->name('nhapDiemCuoiKy');
+Route::get('da-nhap-diem', 'GiaoViecController@danhapDiemCuoiKy')->name('danhapDiemCuoiKy');
+Route::post('danh-gia-cuoi-ku/{id}', 'GiaoViecController@postDanhGiaCuoiKy')->name('postDanhGiaCuoiKy');
+Route::post('nhap-diem-cuoi-ku/{id}', 'GiaoViecController@postNhapDiemCuoiKy')->name('postNhapDiemCuoiKy');
 Route::get('danh-sach-cong-viec-hoan-thanh', 'GiaoViecController@congViecDaHoanThanh')->name('congViecDaHoanThanh');
 Route::get('{id}/cap-nhat-cv.html', 'GiaoViecController@capNhatCV')->name('capNhatCV');
 Route::get('danh-sach-cong-viec-da-nhan', 'GiaoViecController@congViecDaNhan')->name('congViecDaNhan');

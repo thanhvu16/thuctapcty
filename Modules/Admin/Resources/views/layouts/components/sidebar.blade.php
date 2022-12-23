@@ -35,6 +35,9 @@
             @role(TRUONG_KHOA)
             @include('admin::layouts.components.sidebar_truongkhoa')
             @endrole
+            @role(GIANG_VIEN)
+            @include('admin::layouts.components.sidebar_giangvien')
+            @endrole
 
         </ul>
     </section>
