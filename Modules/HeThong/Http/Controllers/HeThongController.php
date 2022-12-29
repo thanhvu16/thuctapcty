@@ -190,7 +190,7 @@ class HeThongController extends Controller
                 if (!empty($timloaiso)) {
                     return $query->where('ten_khoa', 'Like', "%$timloaiso%");
                 }
-            })->paginate(PER_PAGE);
+            })->where('id', auth::user()->khoa_id)->paginate(PER_PAGE);
         $giangVien = User::role([GIANG_VIEN])->whereNull('deleted_at')->get();
         $giaoVu = User::role([GIAO_VU_KHOA])->whereNull('deleted_at')->get();
 

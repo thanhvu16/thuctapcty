@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title" style="font-size: 18px !important;">Danh sách các khoa</h3>
+                        <h3 class="box-title" style="font-size: 18px !important;">Phân công</h3>
                     </div>
                     @role(NHA_TRUONG)
                     <div class="col-md-3 form-group mt-4">

@@ -107,7 +107,7 @@
 
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title" style="font-size: 16px !important;">Đăng ký thực tập tại công ty HHVH Store</h3>
+                            <h3 class="box-title" style="font-size: 16px !important;">Đăng ký thực tập </h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="col-md-12 mt-1 ">

@@ -23,4 +23,10 @@
     </a>
 </li>
 
-
+<li class="{{  Route::is('thongKeXepLoai') ? 'active' : '' }} ">
+    <a href="{{route('thongKeXepLoai')}}">
+        <i class="fa  fa-recycle" ></i> <span>Thông kê</span>
+        <span class="pull-right-container">
+            </span>
+    </a>
+</li>
