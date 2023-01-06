@@ -2,6 +2,7 @@
 
 namespace Modules\HeThong\Http\Controllers;
 
+use App\Imports\EmailImport;
 use App\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\DoanhNghiep;
 use Modules\Admin\Entities\Khoa;
 use Spatie\Permission\Models\Role;
-use auth;
+use auth,Excel;
 
 class HeThongController extends Controller
 {
@@ -124,6 +125,12 @@ class HeThongController extends Controller
             ->paginate(PER_PAGE);
 
         return view('hethong::sinh-vien.index', compact('users', 'danhSachPhongBan'));
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new EmailImport(), $request->file('file'));
+        return redirect()->back()->with('success', 'cập nhật thành công !');
     }
 
     public function taoSV()

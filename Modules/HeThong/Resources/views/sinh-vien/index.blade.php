@@ -17,6 +17,12 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane {{ Request::get('tab') == 'tab_1' || empty(Request::get('tab')) ? 'active' : null }}" id="tab_1">
+                        <div class="col-md-12 form-group text-right">
+                            <button type="button"  onclick="showModal()"
+                                    class="btn btn-success waves-effect waves-light btn-sm btn-export-data"><i
+                                    class="fa fa-file-excel-o"></i> Import danh sách sinh viên
+                            </button>
+                        </div>
                         <div class="col-md-12">
                             <div class="row">
                                 <form action="{{route('DSSV')}}" method="get">
@@ -54,6 +60,7 @@
                                             <a href="{{ route('nguoi-dung.index') }}" class="btn btn-success"><i class="fa fa-refresh"></i></a>
                                         @endif
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -118,6 +125,40 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="{{route('postImPOsst')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title" style="font-size: 18px !important; font-weight: bold !important;"><i
+                                                    class="fa fa-folder-open-o" style="font-size: 18px !important; font-weight: bold !important;"></i> Tải danh sách sinh viên</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="sokyhieu" class="">Chọn tệp
+                                                        tin danh sách sinh viên<br><small><i></i></small>
+                                                    </label>
+
+                                                    <input type="file"  name="file"
+                                                           accept=".xlsx,.xls"/>
+                                                    <input type="text" id="url-file" value="123"
+                                                           class="hidden" name="txt_file">
+                                                </div>
+                                                <div class="form-group col-md-4" >
+                                                    <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i> Tải lên</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.tab-pane -->
                 </div>
@@ -127,6 +168,10 @@
 @endsection
 @section('script')
     <script>
+        function showModal() {
+            console.log(1);
+            $("#myModal").modal('show');
+        }
         donVi='#don-vi';
         $('.select-don-vi-id').on('change', function () {
             let $this = $(this);
