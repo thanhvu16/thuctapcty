@@ -26,5 +26,8 @@ Route::post('post-import', 'HeThongController@import')->name('postImPOsst');
 Route::get('tao-giao-vien-hd', 'HeThongController@taoGiaoVienHD')->name('taoGiaoVienHD');
 Route::get('danh-sach-giao-vien-hd', 'HeThongController@DSGiaoVienHD')->name('DSGiaoVienHD');
 
+Route::get('tao-truong-bo-mon', 'HeThongController@taoTruongBoMon')->name('taoTruongBoMon');
+Route::get('danh-sach-truong-bo-mon', 'HeThongController@DSTruongBoMon')->name('DSTruongBoMon');
+
 Route::get('tao-doanh-nghiep', 'HeThongController@taoDoanhNghiep')->name('taoDoanhNghiep');
 Route::get('danh-sach-doanh-nghiep', 'HeThongController@DSDoanhNghiep')->name('DSDoanhNghiep');

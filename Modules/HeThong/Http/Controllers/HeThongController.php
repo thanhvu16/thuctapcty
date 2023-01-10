@@ -61,13 +61,52 @@ class HeThongController extends Controller
     {
         $roles = Role::where('name', 'Giảng viên hướng dẫn')->get();
         $danhSachDonVi = null;
-        $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
-        $khoa = Khoa::all();
-        $giangVien = User::role([GIANG_VIEN])->whereNull('deleted_at')->get();
+        $doanhNghiep = DoanhNghiep::where('khoa',auth::user()->khoa_id)->whereNull('deleted_at')->get();
+        $khoa = Khoa::where('id',auth::user()->khoa_id)->get();
+        $giangVien = User::role([GIANG_VIEN])->where('khoa_id',auth::user()->khoa_id)->whereNull('deleted_at')->get();
         return view('hethong::tao-giao-vu-admin.create',
             compact('roles', 'danhSachDonVi', 'doanhNghiep', 'khoa', 'giangVien'));
     }
+    public function taoTruongBoMon()
+    {
+        $roles = Role::where('name', 'Trưởng bộ môn')->get();
+        $danhSachDonVi = null;
+        $doanhNghiep = DoanhNghiep::where('khoa',auth::user()->khoa_id)->whereNull('deleted_at')->get();
+        $khoa = Khoa::where('id',auth::user()->khoa_id)->get();
+        $giangVien = User::role([GIANG_VIEN])->where('khoa_id',auth::user()->khoa_id)->whereNull('deleted_at')->get();
+        return view('hethong::truong-bo-mon.create',
+            compact('roles', 'danhSachDonVi', 'doanhNghiep', 'khoa', 'giangVien'));
+    }
 
+    public function DSTruongBoMon(Request $request)
+    {
+        $hoTen = $request->get('fullname') ?? null;
+        $username = $request->get('username') ?? null;
+        $trangThai = $request->get('trang_thai') ?? null;
+        $danhSachPhongBan = null;
+        $users = User::role([TRUONG_KHOA])
+            ->where(function ($query) use ($hoTen) {
+                if (!empty($hoTen)) {
+                    return $query->where('fullname', 'LIKE', "%$hoTen%");
+                }
+            })
+            ->where(function ($query) use ($username) {
+                if (!empty($username)) {
+                    return $query->where('username', 'LIKE', "%$username%");
+                }
+            })
+            ->where(function ($query) use ($trangThai) {
+                if (!empty($trangThai)) {
+                    return $query->where('status', $trangThai);
+                }
+            })
+            ->where('khoa_id',auth::user()->khoa_id)
+            ->whereNull('deleted_at')
+            ->orderBy('id', 'DESC')
+            ->paginate(PER_PAGE);
+
+        return view('hethong::truong-bo-mon', compact('users', 'danhSachPhongBan'));
+    }
     public function DSGiaoVienHD(Request $request)
     {
         $hoTen = $request->get('fullname') ?? null;
@@ -90,6 +129,7 @@ class HeThongController extends Controller
                     return $query->where('status', $trangThai);
                 }
             })
+            ->where('khoa_id',auth::user()->khoa_id)
             ->whereNull('deleted_at')
             ->orderBy('id', 'DESC')
             ->paginate(PER_PAGE);
@@ -119,6 +159,7 @@ class HeThongController extends Controller
                     return $query->where('status', $trangThai);
                 }
             })
+            ->where('khoa_id',auth::user()->khoa_id)
             ->where('khoa_id',$khoa->id)
             ->whereNull('deleted_at')
             ->orderBy('id', 'DESC')
@@ -137,9 +178,9 @@ class HeThongController extends Controller
     {
         $roles = Role::where('name', 'Sinh viên')->get();
         $danhSachDonVi = null;
-        $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
-        $khoa = Khoa::all();
-        $giangVien = User::role([GIANG_VIEN])->whereNull('deleted_at')->get();
+        $doanhNghiep = DoanhNghiep::where('khoa',auth::user()->khoa_id)->whereNull('deleted_at')->get();
+        $khoa = Khoa::where('id',auth::user()->khoa_id)->get();
+        $giangVien = User::role([GIANG_VIEN])->where('khoa_id',auth::user()->khoa_id)->whereNull('deleted_at')->get();
         return view('hethong::sinh-vien.create',
             compact('roles', 'danhSachDonVi', 'doanhNghiep', 'khoa', 'giangVien'));
     }
@@ -148,9 +189,9 @@ class HeThongController extends Controller
     {
         $roles = Role::where('name', 'Doanh nghiệp')->get();
         $danhSachDonVi = null;
-        $doanhNghiep = DoanhNghiep::whereNull('deleted_at')->get();
-        $khoa = Khoa::all();
-        $giangVien = User::role([DOANH_NGHIEP])->whereNull('deleted_at')->get();
+        $doanhNghiep = DoanhNghiep::where('khoa',auth::user()->khoa_id)->whereNull('deleted_at')->get();
+        $khoa = Khoa::where('id',auth::user()->khoa_id)->get();
+        $giangVien = User::role([GIANG_VIEN])->where('khoa_id',auth::user()->khoa_id)->whereNull('deleted_at')->get();
         return view('hethong::tao-giao-vu-admin.create',
             compact('roles', 'danhSachDonVi', 'doanhNghiep', 'khoa', 'giangVien'));
     }
@@ -177,6 +218,7 @@ class HeThongController extends Controller
                     return $query->where('status', $trangThai);
                 }
             })
+            ->where('khoa_id',auth::user()->khoa_id)
             ->whereNull('deleted_at')
             ->orderBy('id', 'DESC')
             ->paginate(PER_PAGE);
@@ -207,11 +249,11 @@ class HeThongController extends Controller
     public function postphanCong(Request $request, $id)
     {
         $khoa = Khoa::find($id);
-        $khoa->giang_vien_hd = $request->giang_vien;
+//        $khoa->giang_vien_hd = $request->giang_vien;
         $khoa->giao_vu = $request->giao_vu;
         $khoa->save();
         //check use
-        if ($request->giang_vien) {
+        if ($request->giao_vu) {
             $sv = User::where('khoa_id', $id)->get();
             if (count($sv) > 0) {
                 foreach ($sv as $data) {

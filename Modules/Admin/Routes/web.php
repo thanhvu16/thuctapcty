@@ -41,6 +41,8 @@ Route::get('xoa-khoa/{id}', array('as' => 'xoakhoa', 'uses' => 'KhoaController@d
 
 //Đơn giá
 Route::resource('don-gia', 'DonGiaController');
+Route::resource('nganh', 'NganhController');
+Route::post('nganh/delete/{id}', array('as' => 'xoaNganh', 'uses' => 'NganhController@destroy'));
 Route::post('don-gia/delete/{id}', array('as' => 'xoadongia', 'uses' => 'DonGiaController@destroy'));
 //tùy chọn
 Route::resource('tuy-chon', 'TuyChonController');

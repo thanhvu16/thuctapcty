@@ -8,7 +8,7 @@
                 <ul class="nav nav-tabs">
                     <li class="{{ Request::get('tab') == 'tab_1' || empty(Request::get('tab')) ? 'active' : null }}">
                         <a href="">
-                            <i class="fa fa-user"></i> Danh sách giảng viên
+                            <i class="fa fa-user"></i> Danh sách trưởng bộ môn
                         </a>
                     </li>
 {{--                    @can('thêm người dùng')--}}
@@ -19,7 +19,7 @@
                     <div class="tab-pane {{ Request::get('tab') == 'tab_1' || empty(Request::get('tab')) ? 'active' : null }}" id="tab_1">
                         <div class="col-md-12">
                             <div class="row">
-                                <form action="{{route('DSGiaoVienHD')}}" method="get">
+                                <form action="{{route('DSTruongBoMon')}}" method="get">
 
 
 
